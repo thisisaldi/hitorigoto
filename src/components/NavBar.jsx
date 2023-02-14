@@ -3,8 +3,8 @@ import SearchBar from './SearchBar'
 
 const NavBar = () => {
   return (
-    <div className='flex items-center justify-between h-[80px] shadow-md'>
-            <h1 className='font-poppins font-[700] text-[24px] ml-[20%]'>hitorigoto</h1>
+    <div className='flex items-center justify-between h-[80px] shadow-md z-100 font-poppins'>
+            <h1 className='font-[700] text-[24px] ml-[20%]'>hitorigoto</h1>
         <SearchBar />
         <div>
             <ul className='flex justify-between gap-[30px]'>
