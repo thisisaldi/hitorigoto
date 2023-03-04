@@ -3,7 +3,7 @@ import Search from '../icons/search.svg'
 
 const SearchBar = () => {
   return (
-    <div className="flex items-center w-[25%]">
+    <div className="flex items-center w-[30%]">
         <div className="flex border border-[#1D1D1D] w-[100%] rounded-[10px] bg-[#F7EFE5] items-center">
             <img src={Search} alt="" className='mx-4'/> 
             <input

@@ -7,6 +7,7 @@ function App() {
     <div className="">
       <NavBar />
       <Hero />
+      <Hero />
     </div>
   );
 }
