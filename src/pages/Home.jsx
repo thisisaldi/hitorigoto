@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 
 const Home = () => {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden font-poppins">
         <NavBar />
         <Hero />
         <div className='flex px-[150px] py-[100px] gap-[150px] items-center'>
