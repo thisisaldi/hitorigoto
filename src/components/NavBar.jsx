@@ -13,7 +13,7 @@ const NavBar = () => {
     };
 
   return (
-    <div className='h-[80px] flex justify-between items-center px-[50px] fixed w-screen bg-white shadow-md'>
+    <div className='h-[80px] flex justify-between items-center px-[50px] fixed w-screen bg-white shadow-md z-10'>
         <h1 className='font-[700] text-[24px]'>hitorigoto</h1>
         <SearchBar />
         <ul className='flex justify-center gap-20'>

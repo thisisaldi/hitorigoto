@@ -13,11 +13,11 @@ const Login = () => {
         <form className='flex flex-col gap-4 py-6 text-[#1D1D1D]'>
             <div>
                 <img className='absolute translate-x-[14px] translate-y-[14px]' src={User} alt="" />
-                <input className='w-[350px] pl-12 py-3 rounded-md border-black border-[2px]' type="text" placeholder='Username' />
+                <input className='w-[350px] pl-12 py-3 rounded-md border-black border-[2px] focus:outline-none' type="text" placeholder='Username' />
             </div>
             <div>
                 <img className='absolute translate-x-[14px] translate-y-[14px]' src={Lock} alt="" />
-                <input className='w-[350px] pl-12 py-3 rounded-md border-black border-[2px]' type="password" placeholder='Password' />
+                <input className='w-[350px] pl-12 py-3 rounded-md border-black border-[2px] focus:outline-none' type="password" placeholder='Password' />
             </div>
             <div className='flex flex-row justify-between text-white'>
                 <div>
