@@ -14,16 +14,16 @@ const NavBar = () => {
 
   return (
     <div className='h-[80px] flex justify-between items-center px-[50px] fixed w-screen bg-white shadow-md z-10'>
-        <h1 className='font-[700] text-[24px]'>hitorigoto</h1>
+        <h1 className='font-[700] text-[24px] select-none'>hitorigoto</h1>
         <SearchBar />
         <ul className='flex justify-center gap-20'>
             <li>
-                <a href="/#">
+                <a className='hover:text-[#645CBB] select-none' href="/#">
                     JLPT
                 </a>
             </li>
             <li>
-                <button onClick={handleDropdown} className='flex' >
+                <button onClick={handleDropdown} className='flex hover:text-[#645CBB] select-none' >
                     Courses
 
                     {open ? 
@@ -35,19 +35,19 @@ const NavBar = () => {
                     open? (
                         <ul className='absolute flex flex-col gap-2 bg-white border-[2px] border-black rounded-md py-2 px-6'>
                            <li>
-                                <a href="/#">JLPT-N1</a>
+                                <a className='hover:text-[#645CBB] select-none' href="/#">JLPT-N1</a>
                             </li> 
                            <li>
-                                <a href="/#">JLPT-N2</a>
+                                <a className='hover:text-[#645CBB] select-none' href="/#">JLPT-N2</a>
                             </li> 
                            <li>
-                                <a href="/#">JLPT-N3</a>
+                                <a className='hover:text-[#645CBB] select-none' href="/#">JLPT-N3</a>
                             </li> 
                            <li>
-                                <a href="/#">JLPT-N4</a>
+                                <a className='hover:text-[#645CBB] select-none' href="/#">JLPT-N4</a>
                             </li> 
                            <li>
-                                <a href="/#">JLPT-N5</a>
+                                <a className='hover:text-[#645CBB] select-none' href="/#">JLPT-N5</a>
                             </li> 
                         </ul>
                     ) : null
