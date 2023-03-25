@@ -1,14 +1,13 @@
 import './App.css';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import AnimatedRoutes from './components/AnimatedRoutes';
+import { BrowserRouter as Router} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="">
-      <Home/>
-      {/* <Register /> */}
-      {/* <Login /> */}
+    <div className="App">
+      <Router>
+        <AnimatedRoutes />
+      </Router>
     </div>
   );
 }

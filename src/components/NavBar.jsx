@@ -3,10 +3,12 @@ import SearchBar from './SearchBar'
 import Button from './Button'
 import { useState } from 'react';
 import Down from '../img/chevron-down.png';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
 
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleDropdown = () => {
         setOpen(!open);
@@ -55,8 +57,8 @@ const NavBar = () => {
             </li>
         </ul>
         <div className='flex justify-between gap-[20px]'>
-            <Button transparent={true} text='Login' size='16' />
-            <Button transparent={false} text='Signup' size='16' />
+            <Button onClick={() => navigate('/login')} transparent={true} text='Login' size='16' />
+            <Button onClick={() => navigate('/register')} text='Signup' size='16' />
         </div>
     </div>
     // <div className='flex items-center justify-evenly h-[80px] shadow-md z-100 font-poppins'>
