@@ -3,11 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const { env, port } = require("./api/configs/server.config");
+// const dbConnect = require('./api/configs/db.config');
 
 const router = require("./api/router");
 
 const app = express();
-app.use(express.static(path.join(__dirname + '../../build')))
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use("/", router);
