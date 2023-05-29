@@ -2,28 +2,13 @@ const bcrypt = require('bcrypt');
 const users = require('./user');
 const { validationResult } = require('express-validator');
 
-// const homepage = async (req, res, next) => {
-//   try {
-//     res.render()
-//     return res.status(200).json({
-//       status: "OK",
-//       message: "Success"
-//     });
-//   } catch (error) {
-//     return res.status(500).json({
-//       status: "FAILED",
-//       message: error
-//     });
-//   }
-// };
-
 const createAccount = async (req, res, next) => {
   try {
     const { username, email } = req.body;
-    const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+    const hash = await bcrypt.hash(req.body.password, 10);
     const errorResult = validationResult(req).formatWith(error => {
       if (error.path === "password") {
-        error.value = encryptedPassword
+        error.value = hash
       }
     });
     errorResult.array();
@@ -32,7 +17,7 @@ const createAccount = async (req, res, next) => {
       const userAccount = {
         username,
         email,
-        encryptedPassword
+        password: hash
       };
 
       users.push(userAccount);
@@ -51,38 +36,51 @@ const createAccount = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       status: "Internal Server Error",
-      message: error,
+      message: error.toString(),
     });
   }
 };
 
 const getAccount = async (req, res, next) => {
   try {
-    const userAccount = users.find((user) => req.params.username === user.username);
+    const userAccount = users.find((user) => req.body.username === user.username);
     
-    if (userAccount !== undefined) {
-      return res.status(200).json({
-        status: "OK",
-        message: "Success",
-        data: userAccount
-      });
-    } else {
+    if (userAccount === undefined) {
       return res.status(404).json({
         status: "Not found",
         message: "Account not found",
       });
     }
+
+    const verify = await bcrypt.compare(req.body.password, userAccount.password);
+    if(verify) {
+      return res.status(200).json({
+        status: "OK",
+        message: "Success",
+        data: {
+          "username": userAccount.username,
+          "email": userAccount.email
+        }
+      });
+    } else {
+      return res.status(401).json({
+        status: "Unauthorized",
+        message: "Wrong username or password"
+      });
+    }
+
   } catch (error) {
     return res.status(500).json({
       status: "Internal Server Error",
-      message: error,
+      message: error.toString(),
     });
   }
 };
 
 const deleteAccount = async (req, res, next) => {
   try {
-
+    const userAccount = users.find((user) => req.body.username === user.username);
+    
     users.pop(req.params.username);
     
     return res.status(200).json({
