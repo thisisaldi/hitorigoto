@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import Select from 'react-select'
 import Jason from "../img/mhmdjason.jpg"
 
-
+https://github.com/thisisaldi/hitorigoto/blob/master/src/pages/EditProfile.jsx
 const EditProfile = () => {
 
     const optionsGender = [
@@ -33,7 +33,7 @@ const EditProfile = () => {
                         </div>
                     </div>
 
-                    <form method='post' className='flex flex-col gap-4 py-6 text-[#1D1D1D]'></form>
+                    <form method='post' className='flex flex-col gap-4 py-6 text-[#1D1D1D]'>
                     <div className="flex flex-col gap-[35px]">
                         <div className="flex gap-4">
                             <p className="w-[120px] mt-2">Nama</p>
@@ -72,6 +72,7 @@ const EditProfile = () => {
                             <p className="w-[120px] mt-2">About Me</p>
                             <textarea maxLength="250" className="px-[7px] border-2 resize-none border-black rounded w-[700px] h-[100px] " type="text"  id="aboutMe" name="aboutMe"/>
                         </div>
+                        </form>
                         </div>
             </div>
           </div>
