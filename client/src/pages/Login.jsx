@@ -16,14 +16,14 @@ const Login = () => {
             hitorigoto
         </h1>
         <span className='font-bold text-[18px]'>Login to your account.</span>
-        <form className='flex flex-col gap-4 py-6 text-[#1D1D1D]'>
+        <form method='post' className='flex flex-col gap-4 py-6 text-[#1D1D1D]'>
             <div>
                 <img className='absolute translate-x-[14px] translate-y-[14px]' src={User} alt="" />
-                <input className='w-[350px] pl-12 py-3 rounded-md border-black border-[2px] focus:outline-none' type="text" placeholder='Username' />
+                <input className='w-[350px] pl-12 py-3 rounded-md border-black border-[2px] focus:outline-none' type="text" placeholder='Username' name='username'/>
             </div>
             <div>
                 <img className='absolute translate-x-[14px] translate-y-[14px]' src={Lock} alt="" />
-                <input className='w-[350px] pl-12 py-3 rounded-md border-black border-[2px] focus:outline-none' type="password" placeholder='Password' />
+                <input className='w-[350px] pl-12 py-3 rounded-md border-black border-[2px] focus:outline-none' type="password" placeholder='Password' name='password' />
             </div>
             <div className='flex flex-row justify-between text-white'>
                 <div>
@@ -35,7 +35,7 @@ const Login = () => {
             </div>
             <button className='w-[350px] bg-black text-white px-5 py-3 rounded-md font-bold'>Login</button>
         </form>
-        <p className='text-[14px]'>Don't have an account? <a href="/#" className='font-bold'>Sign up</a></p>
+        <p className='text-[14px]'>Don't have an account? <a href="/register" className='font-bold'>Sign up</a></p>
     </motion.div>
   )
 }
