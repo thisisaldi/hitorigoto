@@ -20,6 +20,8 @@ const AnimatedRoutes = () => {
                 <Route path='/register' element={<Register />} />
                 <Route path='/editprofile' element={<EditProfile user ={user} setUser={setUser}/>} />
                 <Route path='/profile' element={<Profile />} />
+                <Route path='/aboutus' element={<About/>} />
+
 
             </Routes>
         </AnimatePresence>
