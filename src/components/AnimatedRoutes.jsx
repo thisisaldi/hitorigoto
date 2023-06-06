@@ -6,6 +6,8 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import EditProfile from '../pages/EditProfile';
 import Profile from '../pages/Profile';
+import About from '../pages/About';
+
 
 const AnimatedRoutes = () => {
 
