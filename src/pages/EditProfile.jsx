@@ -72,8 +72,9 @@ const EditProfile = () => {
                             <p className="w-[120px] mt-2">About Me</p>
                             <textarea maxLength="250" className="px-[7px] border-2 resize-none border-black rounded w-[700px] h-[100px] " type="text"  id="aboutMe" name="aboutMe"/>
                         </div>
-                        </form>
+                        
                         </div>
+                        </form>
             </div>
           </div>
 
