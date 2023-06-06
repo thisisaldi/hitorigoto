@@ -6,7 +6,6 @@ import Button from "../components/Button";
 import Select from 'react-select'
 import Jason from "../img/mhmdjason.jpg"
 
-https://github.com/thisisaldi/hitorigoto/blob/master/src/pages/EditProfile.jsx
 const EditProfile = () => {
 
     const optionsGender = [
@@ -34,51 +33,51 @@ const EditProfile = () => {
                     </div>
 
                     <form method='post' className='flex flex-col gap-4 py-6 text-[#1D1D1D]'>
-                    <div className="flex flex-col gap-[35px]">
-                        <div className="flex gap-4">
-                            <p className="w-[120px] mt-2">Nama</p>
-                            <input className="px-[7px] border-2 border-black h-[40px] rounded w-[700px]" type="text"  id="nama" name="nama"/>
-                        </div>
-                        <div className="flex gap-4">
-                            <p className="w-[120px] mt-2">Gender</p>
-                            <Select className=" border-2 border-black rounded w-[700px] " type="text"  id="gender" name="gender" options={optionsGender}/>
-                        </div>
-                        <div className="flex gap-4">
-                            <p className="w-[120px] mt-2">Tanggal Lahir</p>
-                            <input className="px-[7px] border-2 h-[40px] border-black rounded	w-[700px] " type="date"  id="tanggalLahir" name="tanggalLahir"/>
+                            <div className="flex flex-col gap-[35px]">
+                                <div className="flex gap-4">
+                                    <p className="w-[120px] mt-2">Nama</p>
+                                    <input className="px-[7px] border-2 border-black h-[40px] rounded w-[700px]" type="text"  id="nama" name="nama"/>
+                                </div>
+                                <div className="flex gap-4">
+                                    <p className="w-[120px] mt-2">Gender</p>
+                                    <Select className=" border-2 border-black rounded w-[700px] " type="text"  id="gender" name="gender" options={optionsGender}/>
+                                </div>
+                                <div className="flex gap-4">
+                                    <p className="w-[120px] mt-2">Tanggal Lahir</p>
+                                    <input className="px-[7px] border-2 h-[40px] border-black rounded	w-[700px] " type="date"  id="tanggalLahir" name="tanggalLahir"/>
 
-                        </div>
-                        <div className="flex gap-4">
-                            <p className="w-[120px] mt-2">Pekerjaan</p>
-                            <input className=" px-[7px] border-2 h-[40px] border-black rounded	w-[700px] " type="text"  id="pekerjaan" name="pekerjaan"/>
+                                </div>
+                                <div className="flex gap-4">
+                                    <p className="w-[120px] mt-2">Pekerjaan</p>
+                                    <input className=" px-[7px] border-2 h-[40px] border-black rounded	w-[700px] " type="text"  id="pekerjaan" name="pekerjaan"/>
 
-                        </div>
-                        <div className="flex gap-4">
-                            <p className="w-[120px] mt-2">Instansi</p>
-                            <input className="px-[7px] border-2 h-[40px] border-black rounded	w-[700px] " type="text"  id="instansi" name="instansi"/>
+                                </div>
+                                <div className="flex gap-4">
+                                    <p className="w-[120px] mt-2">Instansi</p>
+                                    <input className="px-[7px] border-2 h-[40px] border-black rounded	w-[700px] " type="text"  id="instansi" name="instansi"/>
 
-                        </div>
-                            <div className="flex gap-4">
-                            <p className="w-[120px] mt-2">No. Telp</p>
-                        <input className=" px-[7px] border-2 h-[40px] border-black rounded	w-[700px] " type="text"  id="notelp" name="notelp"/>
+                                </div>
+                                <div className="flex gap-4">
+                                    <p className="w-[120px] mt-2">No. Telp</p>
+                                    <input className=" px-[7px] border-2 h-[40px] border-black rounded	w-[700px] " type="text"  id="notelp" name="notelp"/>
 
-                        </div>
-                        <div className="flex gap-4">
-                            <p className="w-[120px] mt-2">Email</p>
-                            <input className=" px-[7px] border-2 h-[40px] border-black rounded	w-[700px] " type="text"  id="email" name="email"/>
+                                </div>
+                                <div className="flex gap-4">
+                                    <p className="w-[120px] mt-2">Email</p>
+                                    <input className=" px-[7px] border-2 h-[40px] border-black rounded	w-[700px] " type="text"  id="email" name="email"/>
 
-                        </div>
-                        <div className="flex gap-4">
-                            <p className="w-[120px] mt-2">About Me</p>
-                            <textarea maxLength="250" className="px-[7px] border-2 resize-none border-black rounded w-[700px] h-[100px] " type="text"  id="aboutMe" name="aboutMe"/>
-                        </div>
+                                </div>
+                                <div className="flex gap-4">
+                                    <p className="w-[120px] mt-2">About Me</p>
+                                    <textarea maxLength="250" className="px-[7px] border-2 resize-none border-black rounded w-[700px] h-[100px] " type="text"  id="aboutMe" name="aboutMe"/>
+                                </div>
+                            </div>
                         </form>
-                        </div>
-            </div>
-          </div>
+                    </div>
+                </div>
 
-          <Footer />
-      </motion.div>
+            <Footer />
+        </motion.div>
     )
   }
 

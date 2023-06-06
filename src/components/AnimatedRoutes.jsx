@@ -5,6 +5,7 @@ import Register from '../pages/Register';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import EditProfile from '../pages/EditProfile';
+import Profile from '../pages/Profile';
 
 const AnimatedRoutes = () => {
 
@@ -18,6 +19,7 @@ const AnimatedRoutes = () => {
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/editprofile' element={<EditProfile user ={user} setUser={setUser}/>} />
+                <Route path='/profile' element={<Profile />} />
 
             </Routes>
         </AnimatePresence>
