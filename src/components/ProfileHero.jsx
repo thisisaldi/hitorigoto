@@ -1,9 +1,14 @@
 import React from 'react'
 import Grey from '../img/grey.png';
 import Button from './Button';
+import { useNavigate } from 'react-router-dom';
+
 
 const ProfileHero = () => {
-  return (
+
+    const navigate = useNavigate();
+
+    return (
     <div className='flex flex-row px-[150px] pt-[120px] pb-[80px] justify-start items-start gap-10 bg-[#F7EFE5]'>
         <img className='w-[300px] h-[300px] rounded-full border-[2px] border-[#252525]' src={Grey} alt="" />
         <div className='flex flex-col justify-between h-[300px]'>
@@ -21,11 +26,11 @@ const ProfileHero = () => {
                 </div>
             </div>
             <div>
-                <Button text='Edit Profile' />
+                <Button onClick={() => navigate('/editProfile')} text='Edit Profile' />
             </div>
         </div>
     </div>
-  )
+    )
 }
 
 export default ProfileHero
