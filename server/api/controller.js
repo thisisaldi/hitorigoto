@@ -1,30 +1,50 @@
 const bcrypt = require('bcrypt');
-const asyncHandler =  require('express-async-handler');
 const { validationResult } = require('express-validator');
-const users = require('./user');
+const User = require("./model");
+const jwt = require("jsonwebtoken");
+const createToken = require('./util/token');
 
-// const homepage = async (req, res, next) => {
-//   try {
-//     res.render()
-//     return res.status(200).json({
-//       status: "OK",
-//       message: "Success"
-//     });
-//   } catch (error) {
-//     return res.status(500).json({
-//       status: "FAILED",
-//       message: error
-//     });
-//   }
-// };
+const homepage = async (req, res, next) => {
+  try {
+    const token = req.cookies.token
+
+    if (token) {
+      jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+        if (err) {
+          return res.status(401).json({
+            status: "Unauthorized",
+            data: err,
+            message: "Please login again!"
+          })
+        }
+
+        const user = await User.findById(data.id)
+          return res.status(200).clearCookie("token").json({
+            status: "OK",
+            user: user.username
+          })
+        }
+      )
+    } else {
+      return res.status(400).json({
+        status: "OK",
+        user: user.username
+      })
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "Internal Server Error",
+      message: error.toString(),
+    });
+  }
+}
 
 const createAccount = async (req, res, next) => {
   try {
     const { username, email } = req.body;
-    const encryptedPassword = await bcrypt.hash(req.body.password, 10);
     const errorResult = validationResult(req).formatWith(error => {
       if (error.path === "password") {
-        error.value = encryptedPassword
+        error.value = ""
       }
     });
     errorResult.array();
@@ -33,15 +53,22 @@ const createAccount = async (req, res, next) => {
       const userAccount = {
         username,
         email,
-        encryptedPassword
+        password: await bcrypt.hash(req.body.password, 10),
+        createdAt: new Date().toISOString()
       };
 
-      users.push(userAccount);
-
+      const account = await User.create(userAccount);
+      const token = createToken(account._id);
+      
+      res.cookie("token", token, {
+        withCredentials: true,
+        httpOnly: false,
+      });
+      
       return res.status(201).json({
         status: "Created",
         message: "Account successfully created",
-        data: userAccount
+        data: account
       });
     } else {
       return res.status(400).json({
@@ -52,31 +79,53 @@ const createAccount = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       status: "Internal Server Error",
-      message: error,
+      message: error.toString(),
     });
   }
 };
 
 const getAccount = async (req, res, next) => {
   try {
-    const userAccount = users.find((user) => req.params.username === user.username);
+    const { username, password } = req.body;
+    const errorResult = validationResult(req).formatWith(error => {
+      if (error.path === "password") {
+        error.value = ""
+      }
+    });
+    errorResult.array();
+    const account = await User.findOne({ username });
     
-    if (userAccount !== undefined) {
-      return res.status(200).json({
-        status: "OK",
-        message: "Success",
-        data: userAccount
-      });
+    if (errorResult.isEmpty() && account !== null) {
+      const verify = await bcrypt.compare(password, account.password);
+      
+      if(verify) {
+        const token = createToken(account._id)
+        res.cookie("token", token, {
+          withCredentials: true,
+          httpOnly: false,
+        });
+
+        return res.status(201).json({
+          status: "OK",
+          message: "Success",
+          data: account
+        });
+      } else {
+        return res.status(401).json({
+          status: "Unauthorized",
+          message: "Incorrect username or password!"
+        });
+      }
     } else {
-      return res.status(404).json({
-        status: "Not found",
-        message: "Account not found",
+      return res.status(400).json({
+        status: "Bad Request",
+        message: errorResult.isEmpty() ? "Incorrect username or password" : errorResult
       });
     }
   } catch (error) {
     return res.status(500).json({
       status: "Internal Server Error",
-      message: error,
+      message: error.toString(),
     });
   }
 };
@@ -95,12 +144,13 @@ const deleteAccount = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       status: "Internal Server Error",
-      message: error,
+      message: error.toString(),
     });
   }
 };
 
 module.exports = {
+  homepage,
   createAccount,
   getAccount,
   deleteAccount
