@@ -17,6 +17,7 @@ const Register = () => {
             hitorigoto
         </h1>
         <span className='font-bold text-[18px]'>Create a new account.</span>
+        <span className='text-[12px] text-red-300'>Jangan masukkan data asli. Website ini hanyalah sample.</span>
         <form className='flex flex-col gap-4 py-6 text-[#1D1D1D]'>
             <div>
                 <img className='absolute translate-x-[14px] translate-y-[14px]' src={User} alt="" />
