@@ -4,7 +4,7 @@ const User = require("./model");
 const jwt = require("jsonwebtoken");
 const createToken = require('./util/token');
 
-const homepage = async (req, res, next) => {
+const homePage = async (req, res, next) => {
   try {
     const token = req.cookies.token
 
@@ -14,21 +14,22 @@ const homepage = async (req, res, next) => {
           return res.status(401).json({
             status: "Unauthorized",
             data: err,
-            message: "Please login again!"
+            message: "Please login!"
           })
         }
 
-        const user = await User.findById(data.id)
-          return res.status(200).clearCookie("token").json({
-            status: "OK",
-            user: user.username
-          })
+        const user = await User.findById(data.id, {password: 0})
+
+        return res.status(200).json({
+          status: "OK",
+          user: user.username
+        })
         }
       )
     } else {
-      return res.status(400).json({
+      return res.status(200).json({
         status: "OK",
-        user: user.username
+        message: "Success"
       })
     }
   } catch (error) {
@@ -37,6 +38,13 @@ const homepage = async (req, res, next) => {
       message: error.toString(),
     });
   }
+}
+
+const invalidPage = async (req, res, next) => {
+  return res.status(404).json({
+    status: "Not Found",
+    message: "404 Not Found, you shouldn't be here!"
+  })
 }
 
 const createAccount = async (req, res, next) => {
@@ -132,15 +140,49 @@ const getAccount = async (req, res, next) => {
 
 const deleteAccount = async (req, res, next) => {
   try {
-    const userAccount = users.find((user) => req.body.username === user.username);
+    const token = req.cookies.token
     
-    users.pop(req.params.username);
-    
-    return res.status(200).json({
-      status: "OK",
-      message: "Account has been deleted",
-      data: users,
-    });
+    if (token) {
+      jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+        const username = req.params.username
+        const account = await User.findById(data.id)
+
+        if (!account) {
+          return res.status(404).json({
+            status: "Not Found",
+            message: "Account not found!",
+          });
+        }
+        
+        if (username !== account.username) {
+          return res.status(403).json({
+            status: "Forbidden",
+            message: "Wrong Account!"
+          })
+        }
+
+        if (err) {
+          return res.status(401).json({
+            status: "Unauthorized",
+            data: err,
+            message: "Please login!"
+          })
+        }
+        
+        const result = await User.deleteOne({_id: account._id})
+        return res.status(200).clearCookie("token").json({
+          status: "OK",
+          message: "Account has been deleted!",
+          data: result
+        });
+      });
+    } else {
+      return res.status(401).json({
+        status: "Unauthorized",
+        message: "Please login!"
+      })
+    }
+
   } catch (error) {
     return res.status(500).json({
       status: "Internal Server Error",
@@ -150,7 +192,8 @@ const deleteAccount = async (req, res, next) => {
 };
 
 module.exports = {
-  homepage,
+  homePage,
+  invalidPage,
   createAccount,
   getAccount,
   deleteAccount
