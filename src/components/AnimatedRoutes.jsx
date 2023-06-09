@@ -8,6 +8,7 @@ import EditProfile from '../pages/EditProfile';
 import Profile from '../pages/Profile';
 import About from '../pages/About';
 import GeneralCourse from '../pages/GeneralCourse'
+import CourseMaterial from '../pages/CourseMaterial';
 
 
 const AnimatedRoutes = () => {
@@ -25,6 +26,7 @@ const AnimatedRoutes = () => {
                 <Route path='/profile' element={<Profile />} />
                 <Route path='/aboutus' element={<About/>} />
                 <Route path='/course' element={<GeneralCourse/>} />
+                <Route path='/course/:jlpt/:id' element={<CourseMaterial />} />
 
 
 
