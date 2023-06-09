@@ -19,7 +19,7 @@ const GeneralCourse = () =>{
             <NavBar/>
             <div className='flex flex-col'>
                 <div className='flex flex-row w-full px-[200px] py-[100px] bg-[#F7EFE5]'>
-                    <div className='flex flex-col gap-4 items-start py-[200px] w-[500px]'>
+                    <div className='py-[200px] w-[500px]'>
                         <h1 className='font-[700] mb-4 text-[30px] text-black'>Mulai kursus, di mana saja dan kapan saja!</h1>
                         <p>Pilih Course sesuai dengan kemampuan Anda demi proses belajar yang menyenangkan.</p>
                         <Button text='Pilih Course' size='14'/>
