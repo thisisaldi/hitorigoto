@@ -1,18 +1,12 @@
 import React from 'react'
 import SearchBar from './SearchBar'
 import Button from './Button'
-import { useState } from 'react';
 import Down from '../img/chevron-down.png';
 import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
 
-    const [open, setOpen] = useState(false);
     const navigate = useNavigate();
-
-    const handleDropdown = () => {
-        setOpen(!open);
-    };
 
   return (
     <div className='h-[80px] flex justify-between items-center px-[50px] fixed w-screen bg-white shadow-md z-10'>
@@ -20,40 +14,24 @@ const NavBar = () => {
         <SearchBar />
         <ul className='flex justify-center gap-20'>
             <li>
-                <a className='hover:text-[#645CBB] select-none' href="/#">
+                <a className='hover:text-[#645CBB] select-none' href="/aboutus">
                     JLPT
                 </a>
             </li>
-            <li>
-                <button onClick={handleDropdown} className='flex hover:text-[#645CBB] select-none' >
-                    Courses
-
-                    {open ? 
-                    <img src={Down} alt="" style={{transform: 'rotate(180deg)'}}/> :
-                    <img src={Down} alt="" style={{transform: 'rotate(0deg)'}}/> 
-                    }
-                </button>
-                {
-                    open? (
-                        <ul className='absolute flex flex-col gap-2 bg-white border-[2px] border-black rounded-md py-2 px-6'>
-                           <li>
-                                <a className='hover:text-[#645CBB] select-none' href="/#">JLPT-N1</a>
-                            </li> 
-                           <li>
-                                <a className='hover:text-[#645CBB] select-none' href="/#">JLPT-N2</a>
-                            </li> 
-                           <li>
-                                <a className='hover:text-[#645CBB] select-none' href="/#">JLPT-N3</a>
-                            </li> 
-                           <li>
-                                <a className='hover:text-[#645CBB] select-none' href="/#">JLPT-N4</a>
-                            </li> 
-                           <li>
-                                <a className='hover:text-[#645CBB] select-none' href="/#">JLPT-N5</a>
-                            </li> 
-                        </ul>
-                    ) : null
-                }
+            <li className='relative inline-block dropdown'>
+                <div className='flex'>
+                    <button className='flex hover:text-[#645CBB] select-none dropbtn'>
+                        <a href="/course">Courses</a>
+                    </button>
+                    <img className='down-hover' src={Down} alt=''/>
+                </div>
+                <div className='hidden absolute z-1 dropdown-content bg-white border-[2px] w-32 border-black rounded-md py-2 px-4'>
+                    <a href="/#" className='py-2 hover:text-[#645CBB]'>JLPT-N1</a>
+                    <a href="/#" className='py-2 hover:text-[#645CBB]'>JLPT-N2</a>
+                    <a href="/#" className='py-2 hover:text-[#645CBB]'>JLPT-N3</a>
+                    <a href="/#" className='py-2 hover:text-[#645CBB]'>JLPT-N4</a>
+                    <a href="/#" className='py-2 hover:text-[#645CBB]'>JLPT-N5</a>
+                </div>
             </li>
         </ul>
         <div className='flex justify-between gap-[20px]'>
