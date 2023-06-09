@@ -7,6 +7,7 @@ import { AnimatePresence } from 'framer-motion';
 import EditProfile from '../pages/EditProfile';
 import Profile from '../pages/Profile';
 import About from '../pages/About';
+import GeneralCourse from '../pages/GeneralCourse'
 
 
 const AnimatedRoutes = () => {
@@ -23,6 +24,8 @@ const AnimatedRoutes = () => {
                 <Route path='/editprofile' element={<EditProfile user ={user} setUser={setUser}/>} />
                 <Route path='/profile' element={<Profile />} />
                 <Route path='/aboutus' element={<About/>} />
+                <Route path='/course' element={<GeneralCourse/>} />
+
 
 
             </Routes>
