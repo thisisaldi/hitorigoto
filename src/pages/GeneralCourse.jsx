@@ -19,7 +19,7 @@ const GeneralCourse = () =>{
             <NavBar/>
             <div className='flex flex-col'>
                 <div className='flex flex-row w-full px-[200px] py-[100px] bg-[#F7EFE5]'>
-                    <div className='py-[200px] w-[500px]'>
+                    <div className='flex flex-col items-start gap-4 py-[200px] w-[500px]'>
                         <h1 className='font-[700] mb-4 text-[30px] text-black'>Mulai kursus, di mana saja dan kapan saja!</h1>
                         <p>Pilih Course sesuai dengan kemampuan Anda demi proses belajar yang menyenangkan.</p>
                         <Button text='Pilih Course' size='14'/>
@@ -32,14 +32,14 @@ const GeneralCourse = () =>{
                         <h1 className='font-[700] mb-4 text-[24px] text-black '>Course yang tersedia</h1>
                     </div>
                     <div className='flex gap-10 justify-center items-center flex-row'>
-                        <Card imgz={imgcourse1} title="JLPT - N5" text="JLPT N5 adalah tingkatan paling dasar dalam ujian JLPT, dan sangat cocok untuk para siswa yang baru memulai pembelajaran bahasa Jepang."/>
-                        <Card imgz={imgcourse2} title="JLPT - N4" text="JLPT N4 adalah tingkat berikutnya setelah N5 dan merupakan langkah selanjutnya bagi para siswa dalam memperluas pemahaman bahasa Jepang mereka."/>
-                        <Card imgz={imgcourse3} title="JLPT - N3" text="JLPT N3 merupakan tingkat menengah dalam ujian JLPT. Pada tingkat ini, siswa diharapkan memiliki pemahaman yang lebih mendalam tentang tata bahasa dan kosakata Jepang"/>
+                        <Card href='/course/n5' imgz={imgcourse1} title="JLPT - N5" text="JLPT N5 adalah tingkatan paling dasar dalam ujian JLPT, dan sangat cocok untuk para siswa yang baru memulai pembelajaran bahasa Jepang."/>
+                        <Card href='/course/n4' imgz={imgcourse2} title="JLPT - N4" text="JLPT N4 adalah tingkat berikutnya setelah N5 dan merupakan langkah selanjutnya bagi para siswa dalam memperluas pemahaman bahasa Jepang mereka."/>
+                        <Card href='/course/n3' imgz={imgcourse3} title="JLPT - N3" text="JLPT N3 merupakan tingkat menengah dalam ujian JLPT. Pada tingkat ini, siswa diharapkan memiliki pemahaman yang lebih mendalam tentang tata bahasa dan kosakata Jepang"/>
                     </div>
 
                     <div className='flex mt-[50px] items-center justify-center gap-10 flex-row'>
-                        <Card imgz={imgcourse4} title="JLPT - N2" text="JLPT N2 menguji kemampuan siswa dalam memahami teks-teks tulisan dan percakapan dalam bahasa Jepang, baik yang bersifat formal maupun informal."/>
-                        <Card imgz={imgcourse5} title="JLPT - N1" text="JLPT N1 merupakan tingkatan tertinggi dalam ujian JLPT. Tahap ini menekankan kepada pemahaman mendalam tentang tata bahasa, kosakata khusus, serta membaca dan menulis."/>
+                        <Card href='/course/n2' imgz={imgcourse4} title="JLPT - N2" text="JLPT N2 menguji kemampuan siswa dalam memahami teks-teks tulisan dan percakapan dalam bahasa Jepang, baik yang bersifat formal maupun informal."/>
+                        <Card href='/course/n1' imgz={imgcourse5} title="JLPT - N1" text="JLPT N1 merupakan tingkatan tertinggi dalam ujian JLPT. Tahap ini menekankan kepada pemahaman mendalam tentang tata bahasa, kosakata khusus, serta membaca dan menulis."/>
                     </div>
 
                 </div>
