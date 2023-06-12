@@ -1,15 +1,14 @@
-import './App.css';
-import AnimatedRoutes from './components/AnimatedRoutes';
-import { BrowserRouter as Router} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Router>
-        <AnimatedRoutes />
-      </Router>
-    </div>
+    <>
+      <ToastContainer />
+      <Outlet />
+    </>
   );
-}
+};
 
 export default App;

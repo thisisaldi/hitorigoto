@@ -1,17 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import User from '../img/user.svg';
 import Lock from '../img/lock.svg';
-import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form, useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../slices/userApi';
+import { setCredentials } from '../slices/auth';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const Login = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [login, { isLoading }] = useLoginMutation();
+
+    const { userInfo } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (userInfo) {
+        navigate('/');
+        }
+    }, [navigate, userInfo]);
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await login({ email, password }).unwrap();
+            dispatch(setCredentials({ ...res }));
+            navigate('/');
+        } catch (err) {
+            toast.error(err?.data?.message || err.error);
+        }
+    };
+
   return (
-    <motion.div 
-        className='bg-[#645CBB] font-poppins w-screen h-screen overflow-hidden text-white flex flex-col items-center justify-center'
-        initial={{ x: window.innerWidth, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        exit={{ x: window.innerWidth }}
-    >
+    <div className='bg-[#645CBB] font-poppins w-screen h-screen overflow-hidden text-white flex flex-col items-center justify-center'>
         <h1 className='font-[700] text-[30px] m-10 tracking-wide'>
             hitorigoto
         </h1>
@@ -36,7 +63,30 @@ const Login = () => {
             <button className='w-[350px] bg-black text-white px-5 py-3 rounded-md font-bold'>Login</button>
         </form>
         <p className='text-[14px]'>Don't have an account? <a href="/register" className='font-bold'>Sign up</a></p>
-    </motion.div>
+        {/* <Form onSubmit={submitHandler}>
+            <Form.Group className='flex flex-col gap-4 py-6 text-[#1D1D1D]' controlId='email'>
+            <Form.Label>Email Address</Form.Label>
+            <Form.Control
+                type='email'
+                placeholder='Enter email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            ></Form.Control>
+            </Form.Group>
+
+            <Form.Group className='my-2' controlId='password'>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+                type='password'
+                placeholder='Enter password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            ></Form.Control>
+            </Form.Group>
+
+            <button className='w-[350px] bg-black text-white px-5 py-3 rounded-md font-bold'>Login</button>
+        </Form> */}
+    </div>
   )
 }
 
