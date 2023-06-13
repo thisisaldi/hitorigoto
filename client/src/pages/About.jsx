@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import NavBarLogin from '../components/NavBarLogin';
 import img1 from '../img/image 2.png'
 import img2 from '../img/sejarah.png'
 import Footer from '../components/Footer';
+import NavBar from '../components/NavBar';
 
 const About = () => {
   return (
@@ -12,7 +12,7 @@ const About = () => {
         className="overflow-hidden font-poppins"
         transition={{ duration: 0.75, ease: "easeOut" }}>
         
-        <NavBarLogin/>
+        <NavBar />
         <div className='flex  flex-col'>
 
             {/* first element */}

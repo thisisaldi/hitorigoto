@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Button from '../components/Button';
@@ -13,9 +12,7 @@ import Card from '../components/Card';
 
 const GeneralCourse = () =>{
     return(
-        <motion.div 
-        className="overflow-hidden font-poppins"
-        transition={{ duration: 0.75, ease: "easeOut" }}>
+        <div className="overflow-hidden font-poppins">
             <NavBar/>
             <div className='flex flex-col'>
                 <div className='flex flex-row w-full px-[200px] py-[100px] bg-[#F7EFE5]'>
@@ -52,7 +49,7 @@ const GeneralCourse = () =>{
 
 
         <Footer/>
-        </motion.div>
+        </div>
     )
 }
 

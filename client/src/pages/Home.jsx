@@ -4,14 +4,10 @@ import Hero from '../components/Hero';
 import NavBar from "../components/NavBar";
 import Illust from "../img/illust-2.png";
 import Footer from '../components/Footer';
-import { motion } from 'framer-motion';
 
 const Home = () => {
   return (
-    <motion.div 
-      className="overflow-hidden font-poppins"
-      transition={{ duration: 0.75, ease: "easeOut" }}
-    >
+    <div className='overflow-hidden font-poppins'>
         <NavBar />
         <Hero />
         <div className='flex px-[150px] py-[100px] gap-[150px] items-center'>
@@ -22,7 +18,7 @@ const Home = () => {
             </div>
         </div>
         <Footer />
-    </motion.div>
+    </div>
   )
 }
 

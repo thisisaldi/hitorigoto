@@ -1,17 +1,19 @@
-import NavBarLogin from "../components/NavBarLogin";
+/* eslint-disable no-unused-vars */
 import Footer from "../components/Footer";
-import { motion } from 'framer-motion';
 import '../App.css';
 import Button from "../components/Button";
 import Select from 'react-select'
 import Jason from "../img/mhmdjason.jpg"
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import NavBar from "../components/NavBar";
 
 const EditProfile = () => {
 
 
     const [selectedFile, setSelectedFile] = useState()
     const [preview, setPreview] = useState()
+    const { userInfo } = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (!selectedFile) {
@@ -44,11 +46,8 @@ const EditProfile = () => {
 
 
         return (
-      <motion.div 
-        className="overflow-hidden font-poppins"
-        transition={{ duration: 0.75, ease: "easeOut" }}
-      >
-          <NavBarLogin/>
+      <div className="overflow-hidden font-poppins">
+          <NavBar />
           <div className="flex flex-row px-[50px] py-[33px] gap-[150px] border-2 border-black rounded-xl mx-[300px] mt-28 mb-6">
             <div className="w-full">
                 <button onClick={log}></button>
@@ -123,7 +122,7 @@ const EditProfile = () => {
           </div>
 
           <Footer />
-      </motion.div>
+      </div>
     )
   }
 
