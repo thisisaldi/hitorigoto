@@ -18,6 +18,7 @@ import EditProfile from './pages/EditProfile';
 import About from './pages/About';
 import GeneralCourse from './pages/GeneralCourse'
 import CourseMaterial from './pages/CourseMaterial';
+import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/aboutus' element={<About/>} />
+      <Route path='*' element={<NotFound />}/>
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<Profile />} />
         <Route path='/editprofile' element={<EditProfile/>} />
