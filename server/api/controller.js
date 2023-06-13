@@ -119,6 +119,7 @@ const loginAccount = async (req, res, next) => {
 
     let account = await User.findOne({ username })
     
+    
     if (errorResult.isEmpty() && account !== null) {
       account = account.toObject();
 
@@ -131,9 +132,19 @@ const loginAccount = async (req, res, next) => {
           httpOnly: false,
         });
 
+        let img = await Image.findOne({files_id : account.profile_img.id}).select("data");
+        img = img.toObject();
+
+        const imgInfo = await ImageData.findById(account.profile_img.id);
+
         return res.status(201).json({
           status: "OK",
           message: "Success, redirecting...",
+          account: account.username,
+          img: {
+            data: img.data,
+            metadata: imgInfo
+          }
         });
       } else {
         return res.status(401).json({
