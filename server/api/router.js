@@ -5,7 +5,7 @@ const router = express.Router();
 const { createAccountValidator, loginValidator } = require('./util/validator');
 
 router.get(["/", "/about", "/course"], controller.userInfo);
-router.get("/edit/:username", controller.getAccount);
+router.get(["/edit/:username", "/profile"], controller.getAccount);
 router.get("*", controller.invalidPage);
 
 router.post("/login", loginValidator, controller.loginAccount);

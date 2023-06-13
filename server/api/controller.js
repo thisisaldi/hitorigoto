@@ -140,7 +140,7 @@ const loginAccount = async (req, res, next) => {
         return res.status(201).json({
           status: "OK",
           message: "Success, redirecting...",
-          account: account.username,
+          username: account.username,
           img: {
             data: img.data,
             metadata: imgInfo
