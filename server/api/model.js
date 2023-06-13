@@ -33,7 +33,7 @@ const imgDataSchema = new mongoose.Schema({
   contentType : String
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema, 'users');
 const Image = mongoose.model("Image", imgSchema, "fs.chunks");
 const ImageData = mongoose.model("ImageData", imgDataSchema, "fs.files");
 

@@ -1,5 +1,5 @@
 const { checkSchema } = require('express-validator')          
-const User = require("../model");            
+const { User } = require("../model");            
 
 const createAccountValidator = checkSchema({
   username: {
@@ -18,7 +18,7 @@ const createAccountValidator = checkSchema({
     },
     custom: { 
       options: async username => {
-        const exist = await User.findOne({ username });
+        const exist = await User.findOne({username});
         if(exist) {
           throw new Error ("Username already exists!");
         }
@@ -34,7 +34,8 @@ const createAccountValidator = checkSchema({
     errorMessage: "Invalid email format!",
     custom: { 
       options: async email => {
-        const exist = await User.findOne({ email });
+        const exist = await User.findOne({email});
+        
         if(exist) {
           throw new Error ("Email already exists!");
         }

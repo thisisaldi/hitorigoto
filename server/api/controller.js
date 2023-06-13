@@ -116,10 +116,12 @@ const loginAccount = async (req, res, next) => {
       }
     });
     errorResult.array();
+
     let account = await User.findOne({ username })
-    account = account.toObject();
     
     if (errorResult.isEmpty() && account !== null) {
+      account = account.toObject();
+
       const verify = await bcrypt.compare(password, account.password);
       
       if(verify) {
