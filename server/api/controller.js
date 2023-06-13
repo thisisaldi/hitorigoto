@@ -4,9 +4,9 @@ const { User, Image, ImageData } = require("./model");
 const createToken = require('./util/token');
 const jwt = require("jsonwebtoken");
 
-const homePage = async (req, res, next) => {
+const userInfo = async (req, res, next) => {
   try {
-    const token = req.cookies.token
+    const token = req.cookies.token;
 
     if (token) {
       jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
@@ -154,6 +154,38 @@ const loginAccount = async (req, res, next) => {
     });
   }
 };
+
+const logoutAccount = async(req, res, next) => {
+  try {
+    const token = req.cookies.token;
+    if(token) {
+      jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+        if (err) {
+          return res.status(401).json({
+            status: "Unauthorized",
+            data: err,
+            message: "Please login!"
+          })
+        }
+
+        return res.status(200).clearCookie("token").json({
+          status: "OK",
+          message: "Success, redirecting...",
+        });
+      });
+    } else {
+      return res.status(401).json({
+        status: "Unauthorized",
+        message: "Please login!"
+      })
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "Internal Server Error",
+      message: error.toString()
+    });
+  }
+}
 
 const getAccount = async(req, res, next) => {
   try {
@@ -362,10 +394,11 @@ const deleteAccount = async (req, res, next) => {
 };
 
 module.exports = {
-  homePage,
+  userInfo,
   invalidPage,
   createAccount,
   loginAccount,
+  logoutAccount,
   getAccount,
   editAccount,
   deleteAccount
