@@ -17,7 +17,7 @@ const ProfileHero = () => {
     };
 
     const navigate = useNavigate();
-    const userData = JSON.parse(localStorage.getItem('userData'));
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
     
     let base64Flag = 'data:' + userData.img.metadata + ';base64,';
     let imageStr = arrayBufferToBase64(userData.img.data);

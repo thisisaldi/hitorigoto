@@ -48,7 +48,7 @@ const Login = ({ setUserData }) => {
                     username :data.username,
                     img: data.img.data
                 });
-                localStorage.setItem('userData', userData);
+                sessionStorage.setItem('userData', userData);
                 console.log(userData.img)
                 // Redirect to the home page
                 navigate('/');

@@ -8,9 +8,13 @@ import Jason from '../img/mhmdjason.jpg'
 const NavBar = () => {
 
     const navigate = useNavigate();
-    const userData = JSON.parse(localStorage.getItem('userData'));
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
     console.log(`Navbar : ${userData}`);
     const isLoggedIn = !!userData;
+
+    const logOut = () => {
+        sessionStorage.clear();
+    }
 
   return (
     <div className='h-[80px] flex justify-between items-center px-[50px] fixed w-screen bg-white shadow-md z-10'>
@@ -47,7 +51,7 @@ const NavBar = () => {
                 <div className='hidden absolute z-1 dropdown-content bg-white border-[2px] w-32 border-black rounded-md py-2 px-4'>
                     <a href="/profile" className='py-2 hover:text-[#645CBB]'>My Profile</a>
                     <a href="/editprofile" className='py-2 hover:text-[#645CBB]'>Edit Profile</a>
-                    <a href="/#" className='py-2 hover:text-[#645CBB]'>Log Out</a>
+                    <a onClick={logOut} href="/" className='py-2 hover:text-[#645CBB]'>Log Out</a>
                 </div>
             </div>
             )
