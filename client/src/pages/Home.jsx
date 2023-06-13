@@ -4,8 +4,15 @@ import Hero from '../components/Hero';
 import NavBar from "../components/NavBar";
 import Illust from "../img/illust-2.png";
 import Footer from '../components/Footer';
+import Cookies from 'js-cookie';
 
 const Home = () => {
+  const cookieValue = Cookies.get('cookieName');
+  if (cookieValue) {
+    console.log('Cookie exists:', cookieValue);
+  } else {
+    console.log('Cookie does not exist');
+  }
   return (
     <div className='overflow-hidden font-poppins'>
         <NavBar />

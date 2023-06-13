@@ -19,6 +19,7 @@ import About from './pages/About';
 import GeneralCourse from './pages/GeneralCourse'
 import CourseMaterial from './pages/CourseMaterial';
 import NotFound from './pages/NotFound';
+import CourseLogin from './pages/CourseLogin';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,12 +29,11 @@ const router = createBrowserRouter(
       <Route path='/register' element={<Register />} />
       <Route path='/aboutus' element={<About/>} />
       <Route path='*' element={<NotFound />}/>
-      <Route path='' element={<PrivateRoute />}>
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/editprofile' element={<EditProfile/>} />
-        <Route path='/course' element={<GeneralCourse/>} />
-        <Route path='/course/:jlpt/:id' element={<CourseMaterial />} />
-      </Route>
+      <Route path='/profile' element={<Profile />} />
+      <Route path='/editprofile' element={<EditProfile/>} />
+      <Route path='/course' element={<GeneralCourse/>} />
+      <Route path='/course/:jlpt/:id' element={<CourseMaterial />} />
+      <Route path='/course/n3' element={<CourseLogin />} />
     </Route>
   )
 );

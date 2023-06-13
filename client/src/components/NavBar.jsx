@@ -3,10 +3,14 @@ import SearchBar from './SearchBar'
 import Button from './Button'
 import Down from '../img/chevron-down.png';
 import { useNavigate } from 'react-router-dom';
+import Jason from '../img/mhmdjason.jpg'
 
 const NavBar = () => {
 
     const navigate = useNavigate();
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    console.log(`Navbar : ${userData}`);
+    const isLoggedIn = !!userData;
 
   return (
     <div className='h-[80px] flex justify-between items-center px-[50px] fixed w-screen bg-white shadow-md z-10'>
@@ -28,16 +32,34 @@ const NavBar = () => {
                 <div className='hidden absolute z-1 dropdown-content bg-white border-[2px] w-32 border-black rounded-md py-2 px-4'>
                     <a href="/#" className='py-2 hover:text-[#645CBB]'>JLPT-N1</a>
                     <a href="/#" className='py-2 hover:text-[#645CBB]'>JLPT-N2</a>
-                    <a href="/#" className='py-2 hover:text-[#645CBB]'>JLPT-N3</a>
+                    <a href="/course/n3" className='py-2 hover:text-[#645CBB]'>JLPT-N3</a>
                     <a href="/#" className='py-2 hover:text-[#645CBB]'>JLPT-N4</a>
                     <a href="/#" className='py-2 hover:text-[#645CBB]'>JLPT-N5</a>
                 </div>
             </li>
         </ul>
-        <div className='flex justify-between gap-[20px]'>
-            <Button onClick={() => navigate('/login')} transparent={true} text='Login' size='16' />
-            <Button onClick={() => navigate('/register')} text='Signup' size='16' />
-        </div>
+        {isLoggedIn ? (
+            <div className='relative inline-block dropdown p-10'>
+                <div className='flex justify-between items-center gap-[20px] border-2 border-indigo-500/50 rounded-lg p-2'>
+                    <img className='w-[30px] h-[30px] rounded-full' src={Jason} alt="" />
+                    <h1>{userData.username}</h1>
+                </div>
+                <div className='hidden absolute z-1 dropdown-content bg-white border-[2px] w-32 border-black rounded-md py-2 px-4'>
+                    <a href="/profile" className='py-2 hover:text-[#645CBB]'>My Profile</a>
+                    <a href="/editprofile" className='py-2 hover:text-[#645CBB]'>Edit Profile</a>
+                    <a href="/#" className='py-2 hover:text-[#645CBB]'>Log Out</a>
+                </div>
+            </div>
+            )
+            :
+            (
+            <div className='flex justify-between gap-[20px]'>
+                <Button onClick={() => navigate('/login')} transparent={true} text='Login' size='16' />
+                <Button onClick={() => navigate('/register')} text='Signup' size='16' />
+            </div>
+            )
+
+        }
     </div>
     // <div className='flex items-center justify-evenly h-[80px] shadow-md z-100 font-poppins'>
     //         <h1 className='font-[700] text-[24px]'>hitorigoto</h1>

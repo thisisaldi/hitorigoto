@@ -8,11 +8,14 @@ import Down from '../img/chevron-down.png';
 import Button from '../components/Button';
 import { CircularProgress} from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const CourseLogin = () =>{
 
 
+    const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
     const handleDropdown = () => {
@@ -64,7 +67,7 @@ const CourseLogin = () =>{
                              open? (
                                 <div>
                                 <p className='mb-4 mt-2'>JLPT N3 terdiri dari sekitar 650 kanji dari berbagai macam kata yang sering dijumpai baik dalam berita maupun kehidupan sehari-hari. Di materi ini kami sudah merangkum dan menggabungkan beberapa kanji berdasarkan tema dalam kehidupan sehingga memudahkan Anda untuk mempelajari kanji N3 dengan cara yang menyenangkan.</p>
-                                <Button text='Lanjutkan' size='16'/>
+                                <Button onClick={() => navigate('/course/n3/1')} text='Lanjutkan' size='16'/>
                                 </div>
                                 ) : null
                         }
