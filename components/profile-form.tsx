@@ -6,7 +6,7 @@ import type { CurrentUser } from '@/lib/auth';
 import { Avatar } from './avatar';
 import { Button } from './button';
 
-const input = 'h-10 w-full rounded border-2 border-black px-2 focus-visible:outline-2 focus-visible:outline-brand';
+const input = 'h-11 w-full rounded-xl border border-black/20 bg-white px-3 transition focus:border-brand';
 
 function Row({ label, name, errors, children }: {
   label: string;
@@ -16,7 +16,7 @@ function Row({ label, name, errors, children }: {
 }) {
   return (
     <div className="flex flex-col gap-1 md:flex-row md:gap-4">
-      <label htmlFor={name} className="w-[120px] shrink-0 md:mt-2">
+      <label htmlFor={name} className="w-[130px] shrink-0 text-sm font-medium md:mt-3">
         {label}
       </label>
       <div className="w-full">
@@ -44,13 +44,13 @@ export function ProfileForm({ user }: { user: CurrentUser }) {
         <div className="flex flex-col items-start gap-6 sm:flex-row sm:gap-10">
           {preview ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={preview} alt="" className="h-[200px] w-[200px] rounded border-2 border-black object-cover" />
+            <img src={preview} alt="" className="h-[200px] w-[200px] rounded-2xl border border-black/10 object-cover" />
           ) : (
-            <Avatar avatarId={user.avatarId} size={200} className="rounded border-2 border-black" />
+            <Avatar avatarId={user.avatarId} size={200} className="rounded-2xl border border-black/10" />
           )}
           <div className="sm:mt-14">
-            <label htmlFor="profileimg" className="cursor-pointer rounded-lg bg-brand px-4 py-1.5 text-white hover:bg-brand-light">
-              Select Image
+            <label htmlFor="profileimg" className="inline-block cursor-pointer rounded-xl border-2 border-brand px-4 py-2 font-medium text-brand transition hover:bg-brand hover:text-white">
+              Pilih foto
             </label>
             <input
               id="profileimg"
@@ -63,15 +63,15 @@ export function ProfileForm({ user }: { user: CurrentUser }) {
                 setPreview(file ? URL.createObjectURL(file) : undefined);
               }}
             />
-            <p className="mt-2 ml-1 text-xs">Gambar Profile Anda harus memiliki rasio 1:1</p>
-            <p className="ml-1 text-xs">Maksimum ukuran gambar adalah 2MB (PNG atau JPEG)</p>
+            <p className="mt-2 ml-1 text-xs">Gunakan foto persegi (rasio 1:1)</p>
+            <p className="ml-1 text-xs">Maksimal 2 MB, format PNG atau JPEG</p>
             {err('profileimg')?.map((e) => (
               <p key={e} className="mt-1 text-sm text-red-600">{e}</p>
             ))}
           </div>
         </div>
 
-        <Row label="Nama" name="fullName" errors={err('fullName')}>
+        <Row label="Nama lengkap" name="fullName" errors={err('fullName')}>
           <input id="fullName" name="fullName" defaultValue={user.fullName} className={input} />
         </Row>
         <Row label="Gender" name="gender" errors={err('gender')}>
@@ -96,23 +96,23 @@ export function ProfileForm({ user }: { user: CurrentUser }) {
         <Row label="Email" name="email" errors={err('email')}>
           <input id="email" name="email" type="email" required defaultValue={user.email} className={input} />
         </Row>
-        <Row label="About Me" name="about" errors={err('about')}>
+        <Row label="Tentang saya" name="about" errors={err('about')}>
           <textarea id="about" name="about" maxLength={250} defaultValue={user.about} className={`${input} h-[100px] resize-none py-1`} />
         </Row>
 
         <div>
-          <Button disabled={pending}>{pending ? 'Saving…' : 'Save Changes'}</Button>
+          <Button disabled={pending}>{pending ? 'Menyimpan…' : 'Simpan perubahan'}</Button>
         </div>
       </form>
 
       <form
         action={deleteAccount}
-        className="mt-4"
+        className="mt-6 border-t border-black/10 pt-6"
         onSubmit={(e) => {
-          if (!confirm('Delete your account permanently?')) e.preventDefault();
+          if (!confirm('Hapus akun secara permanen? Tindakan ini tidak bisa dibatalkan.')) e.preventDefault();
         }}
       >
-        <Button variant="danger">Delete Account</Button>
+        <Button variant="danger">Hapus akun</Button>
       </form>
     </>
   );

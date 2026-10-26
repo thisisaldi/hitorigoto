@@ -1,93 +1,131 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { Container } from '@/components/container';
 import intro from '@/assets/img/jlpt-intro.png';
 import history from '@/assets/img/sejarah.png';
 import { jlptLevels } from '@/lib/courses';
 
-export const metadata: Metadata = { title: 'Tentang JLPT' };
+export const metadata: Metadata = {
+  title: 'Tentang JLPT',
+  description: 'Apa itu JLPT, tujuan ujiannya, sejarahnya, level N5 sampai N1, dan tahapan pendaftarannya.',
+};
 
 const steps = [
-  ['Periksa tanggal ujian di situs web Japan', 'Educational Exchanges and Services (JEES)'],
-  ['Daftar ke MyJLPT di situs web JEES (daftar kapan saja)'],
-  ['Terapkan melalui situs web JEES dan bayar biaya aplikasi'],
-  ['Terima voucher tes dari JEES'],
-  ['Ambil Tes'],
-  [
-    'Menerima hasil tes dari JEES',
-    'Semua peserta ujian di setiap level akan menerima Laporan Skor.',
-    'Peserta ujian dapat melihat hasil tes dengan masuk ke MyJLPT.',
-    'Peserta ujian yang berhasil akan menerima Certificate of Proficiency.',
-  ],
+  { title: 'Periksa jadwal ujian', text: 'Tanggal ujian diumumkan di situs Japan Educational Exchanges and Services (JEES).' },
+  { title: 'Daftar ke MyJLPT', text: 'Buat akun di situs JEES. Pendaftaran akun bisa dilakukan kapan saja.' },
+  { title: 'Ajukan dan bayar biaya ujian', text: 'Isi aplikasi melalui situs JEES, lalu bayar biaya pendaftarannya.' },
+  { title: 'Terima voucher tes', text: 'JEES mengirimkan voucher yang Anda bawa pada hari ujian.' },
+  { title: 'Ikuti tes', text: 'Datang ke lokasi ujian sesuai level yang Anda pilih.' },
+  {
+    title: 'Terima hasil tes',
+    text: 'Semua peserta menerima Laporan Skor, dan hasilnya bisa dilihat dengan masuk ke MyJLPT. Peserta yang lulus mendapat Certificate of Proficiency.',
+  },
 ];
 
 export default function About() {
   return (
-    <main>
-      <section className="flex flex-col justify-between gap-8 px-6 pt-28 pb-12 lg:min-h-[700px] lg:flex-row lg:px-[250px] lg:pt-0 lg:pb-0">
-        <div className="flex w-full flex-col lg:w-[550px] lg:justify-center">
-          <h1 className="mb-4 text-4xl font-bold tracking-wide">Apa itu JLPT</h1>
-          <p>
-            JLPT adalah singkatan dari Japanese Language Proficiency Test atau dalam bahasa
-            Jepangnya disebut 日本語能力試験 (nihongo nouryoku shiken). Ujian kemampuan bahasa
-            Jepang yang ditujukan untuk orang-orang yang memiliki bahasa ibu bukan bahasa Jepang.
-          </p>
-        </div>
-        <Image className="w-full max-w-[300px] self-center" src={intro} alt="" />
-      </section>
-
-      <section className="flex flex-col items-center justify-center bg-brand px-6 py-20 text-center text-white">
-        <h2 className="mb-10 text-3xl font-bold tracking-wide">Tujuan</h2>
-        <p>JLPT diadakan di seluruh dunia untuk mengevaluasi dan</p>
-        <p>mengesahkan kemahiran berbahasa Jepang dari penutur asing.</p>
-      </section>
-
-      <section className="flex flex-col justify-between gap-8 px-6 py-12 lg:flex-row lg:px-[250px]">
-        <Image className="w-full max-w-[300px]" src={history} alt="" />
-        <div className="flex w-full flex-col lg:w-[550px]">
-          <h2 className="mb-4 text-3xl font-bold tracking-wide">Sejarah JLPT</h2>
-          <p>
-            JLPT pertama kali diselenggarakan pada tahun 1984 sebagai tanggapan atas meningkatnya
-            permintaan sertifikasi bahasa Jepang yang terstandar. Awalnya 7.000 orang mengikuti
-            tes. Hingga tahun 2003, JLPT merupakan salah satu syarat bagi orang asing untuk masuk
-            universitas Jepang. Sejak 2003, Examination for Japanese University Admission for
-            International Students (EJU) digunakan oleh sebagian besar universitas untuk tujuan
-            ini; tidak seperti JLPT, yang hanya merupakan ujian pilihan ganda, EJU berisi bagian
-            yang mengharuskan peserta ujian menulis dalam bahasa Jepang..
-          </p>
-        </div>
-      </section>
-
-      <section className="mx-4 mt-16 mb-24 flex flex-col items-center gap-5 rounded-xl bg-cream px-6 py-16 shadow-lg lg:mx-[250px] lg:mt-28 lg:px-[120px]">
-        <h2 className="text-3xl font-bold tracking-wide">Level JLPT</h2>
-        {jlptLevels.map((l) => (
-          <div key={l.level} className="w-11/12 border-b border-gray-300 pb-8 last:border-0">
-            <div className="mt-4 flex flex-col gap-6 md:flex-row md:gap-24">
-              <h3 className="mt-4 h-fit w-[125px] shrink-0 rounded-lg bg-brand px-10 py-8 text-4xl font-bold tracking-wide text-white">
-                {l.level}
-              </h3>
-              <div className="flex flex-col">
-                <h4 className="mt-4 text-xl font-bold tracking-wide">Bacaan</h4>
-                <p>{l.reading}</p>
-                <h4 className="mt-4 text-xl font-bold tracking-wide">Pendengaran</h4>
-                <p>{l.listening}</p>
-              </div>
-            </div>
+    <main id="main">
+      <section className="pt-28 pb-20">
+        <Container className="grid items-center gap-12 lg:grid-cols-[6fr_5fr]">
+          <div>
+            <p className="text-sm font-medium tracking-widest text-brand uppercase">JLPT</p>
+            <h1 className="mt-3 text-4xl font-bold md:text-5xl">Apa itu JLPT?</h1>
+            <p className="mt-6 max-w-xl text-lg text-dark/75">
+              JLPT adalah singkatan dari Japanese Language Proficiency Test, atau dalam bahasa
+              Jepangnya{' '}
+              <span className="jp font-medium text-dark">日本語能力試験</span> (nihongo nouryoku
+              shiken). Ujian ini mengukur kemampuan bahasa Jepang bagi orang yang bahasa ibunya
+              bukan bahasa Jepang.
+            </p>
           </div>
-        ))}
+          <Image
+            className="mx-auto h-auto w-full max-w-sm rounded-3xl"
+            src={intro}
+            alt="Peserta belajar bahasa Jepang"
+            priority
+          />
+        </Container>
       </section>
 
-      <section className="flex flex-col items-center bg-cream px-4 py-10">
-        <h2 className="text-3xl font-bold tracking-wide">Tahap Pelaksanaan JLPT</h2>
-        {steps.map((lines) => (
-          <div
-            key={lines[0]}
-            className="mt-8 w-10/12 rounded-lg bg-brand px-10 py-8 text-center tracking-wide text-white lg:w-4/12"
-          >
-            {lines.map((line) => (
-              <p key={line}>{line}</p>
+      <section className="bg-brand py-20 text-white">
+        <Container className="max-w-3xl text-center">
+          <h2 className="text-3xl font-bold">Tujuan</h2>
+          <p className="mt-5 text-lg text-white/85">
+            JLPT diadakan di seluruh dunia untuk mengevaluasi dan mengesahkan kemahiran berbahasa
+            Jepang dari penutur asing.
+          </p>
+        </Container>
+      </section>
+
+      <section className="py-20">
+        <Container className="grid items-center gap-12 lg:grid-cols-[4fr_7fr]">
+          <Image
+            className="mx-auto h-auto w-full max-w-xs rounded-3xl lg:mx-0"
+            src={history}
+            alt="Ilustrasi sejarah JLPT"
+          />
+          <div>
+            <h2 className="text-3xl font-bold">Sejarah JLPT</h2>
+            <p className="mt-5 max-w-prose text-dark/75">
+              JLPT pertama kali diselenggarakan pada tahun 1984 sebagai tanggapan atas meningkatnya
+              permintaan sertifikasi bahasa Jepang yang terstandar. Awalnya 7.000 orang mengikuti
+              tes.
+            </p>
+            <p className="mt-4 max-w-prose text-dark/75">
+              Hingga tahun 2003, JLPT merupakan salah satu syarat bagi orang asing untuk masuk
+              universitas Jepang. Sejak 2003, Examination for Japanese University Admission for
+              International Students (EJU) digunakan oleh sebagian besar universitas untuk tujuan
+              ini. Tidak seperti JLPT yang hanya berupa pilihan ganda, EJU memiliki bagian yang
+              mengharuskan peserta menulis dalam bahasa Jepang.
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-cream py-20">
+        <Container>
+          <h2 className="text-3xl font-bold">Level JLPT</h2>
+          <p className="mt-3 max-w-xl text-dark/70">
+            Ada lima level. N5 adalah yang paling dasar, dan N1 yang paling tinggi.
+          </p>
+          <ol className="mt-12 space-y-4">
+            {jlptLevels.map((l) => (
+              <li
+                key={l.level}
+                className="grid gap-6 rounded-2xl bg-white p-6 shadow-soft md:grid-cols-[7rem_1fr_1fr] md:p-8"
+              >
+                <p className="text-5xl font-bold text-brand">{l.level}</p>
+                <div>
+                  <h3 className="text-sm font-semibold tracking-wide text-brand uppercase">Bacaan</h3>
+                  <p className="mt-2 text-dark/80">{l.reading}</p>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold tracking-wide text-brand uppercase">
+                    Pendengaran
+                  </h3>
+                  <p className="mt-2 text-dark/80">{l.listening}</p>
+                </div>
+              </li>
             ))}
-          </div>
-        ))}
+          </ol>
+        </Container>
+      </section>
+
+      <section className="py-20">
+        <Container className="max-w-3xl">
+          <h2 className="text-3xl font-bold">Tahap pelaksanaan JLPT</h2>
+          <ol className="mt-12 border-l-2 border-brand/30">
+            {steps.map((s, i) => (
+              <li key={s.title} className="relative pb-10 pl-10 last:pb-0">
+                <span className="absolute top-0 -left-[19px] flex size-9 items-center justify-center rounded-full bg-brand text-sm font-bold text-white tabular-nums ring-4 ring-white">
+                  {i + 1}
+                </span>
+                <h3 className="text-lg font-semibold">{s.title}</h3>
+                <p className="mt-1 text-dark/70">{s.text}</p>
+              </li>
+            ))}
+          </ol>
+        </Container>
       </section>
     </main>
   );

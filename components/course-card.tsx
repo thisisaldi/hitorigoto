@@ -3,15 +3,29 @@ import Link from 'next/link';
 import type { Level } from '@/lib/courses';
 
 export function CourseCard({ level }: { level: Level }) {
+  const available = !!level.sections;
   return (
     <Link
       href={`/course/${level.slug}`}
-      className="flex min-h-[560px] w-full max-w-[300px] flex-col items-center gap-4 rounded-lg p-6 shadow-2xl transition hover:-translate-y-1 hover:shadow-brand/30 focus-visible:outline-2 focus-visible:outline-brand"
+      className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-lift"
     >
-      <Image className="h-[250px] w-[250px] object-cover" src={level.image} alt="" />
-      <p className="w-[250px] text-xs">Oleh Hitorigoto Team</p>
-      <h2 className="w-[250px] text-2xl font-bold">{level.title}</h2>
-      <p className="w-[250px] text-xs">{level.summary}</p>
+      <div className="relative">
+        <Image className="aspect-square w-full object-cover" src={level.image} alt="" />
+        <span className="absolute top-3 left-3 rounded-md bg-brand px-2.5 py-1 text-sm font-bold text-white">
+          {level.slug.toUpperCase()}
+        </span>
+      </div>
+      <div className="flex flex-1 flex-col gap-3 p-6">
+        <p className="text-xs text-dark/50">Oleh tim hitorigoto</p>
+        <h2 className="text-xl font-bold">{level.title}</h2>
+        <p className="text-sm text-dark/70">{level.summary}</p>
+        <p className="mt-auto pt-3 text-sm font-semibold text-brand">
+          {available ? 'Buka materi' : 'Segera hadir'}{' '}
+          <span aria-hidden className="inline-block transition group-hover:translate-x-1">
+            →
+          </span>
+        </p>
+      </div>
     </Link>
   );
 }

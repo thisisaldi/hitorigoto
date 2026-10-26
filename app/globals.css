@@ -2,21 +2,69 @@
 
 @theme inline {
   --font-poppins: var(--font-poppins);
+  --font-jp: var(--font-jp);
   --color-brand: #645cbb;
   --color-brand-light: #a59cff;
+  --color-brand-dark: #3f3890;
+  --color-brand-ink: #2a2560;
   --color-cream: #f7efe5;
+  --color-cream-dark: #eadfce;
   --color-dark: #1d1d1d;
+  --shadow-soft: 0 10px 30px -12px rgb(63 56 144 / 0.35);
+  --shadow-lift: 0 18px 40px -14px rgb(63 56 144 / 0.45);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
   font-family: var(--font-poppins), sans-serif;
   color: var(--color-dark);
+  line-height: 1.65;
 }
+
+h1, h2, h3 {
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+p { text-wrap: pretty; }
+
+::selection { background: var(--color-brand); color: white; }
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+/* Japanese text uses its own face so kanji don't fall back to a system font */
+.jp { font-family: var(--font-jp), var(--font-poppins), sans-serif; }
 
 /* hover dropdowns used by the navbar */
 .dropdown { position: relative; display: inline-block; }
-.dropdown-content { display: none; position: absolute; z-index: 1; background: white; }
+.dropdown-content {
+  position: absolute;
+  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 150ms, transform 150ms, visibility 150ms;
+  background: white;
+}
 .dropdown-content a { display: block; text-decoration: none; }
 .dropdown:hover .dropdown-content,
-.dropdown:focus-within .dropdown-content { display: block; }
+.dropdown:focus-within .dropdown-content {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+}
 .dropdown:hover .down-hover { transform: rotate(180deg); }
+.down-hover { transition: transform 150ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

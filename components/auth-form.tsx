@@ -9,62 +9,112 @@ import user from '@/assets/img/user.svg';
 import { login, register, type FormState } from '@/lib/actions';
 
 const fields = {
-  username: { icon: user, type: 'text', placeholder: 'Username', autoComplete: 'username' },
-  email: { icon: mail, type: 'email', placeholder: 'E-mail', autoComplete: 'email' },
-  password: { icon: lock, type: 'password', placeholder: 'Password', autoComplete: 'current-password' },
+  username: { icon: user, label: 'Nama pengguna', type: 'text', autoComplete: 'username' },
+  email: { icon: mail, label: 'Email', type: 'email', autoComplete: 'email' },
+  password: { icon: lock, label: 'Kata sandi', type: 'password', autoComplete: 'current-password' },
 } as const;
+
+const copy = {
+  login: {
+    title: 'Selamat datang kembali',
+    subtitle: 'Masuk untuk melanjutkan pelajaran Anda.',
+    submit: 'Masuk',
+    switchText: 'Belum punya akun?',
+    switchLink: 'Daftar',
+    switchHref: '/register',
+  },
+  register: {
+    title: 'Buat akun baru',
+    subtitle: 'Cukup tiga isian, lalu Anda bisa langsung belajar.',
+    submit: 'Daftar',
+    switchText: 'Sudah punya akun?',
+    switchLink: 'Masuk',
+    switchHref: '/login',
+  },
+};
 
 export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
   const isLogin = mode === 'login';
+  const c = copy[mode];
   const [state, action, pending] = useActionState<FormState, FormData>(isLogin ? login : register, {});
   const names = isLogin ? (['username', 'password'] as const) : (['username', 'email', 'password'] as const);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-brand px-4 text-white">
-      <Link href="/" className="m-10 text-3xl font-bold tracking-wide">
-        hitorigoto
-      </Link>
-      <h1 className="text-lg font-bold">{isLogin ? 'Login to your account.' : 'Create a new account.'}</h1>
-
-      <form action={action} className="flex w-full max-w-[350px] flex-col gap-4 py-6 text-dark">
-        {names.map((name) => {
-          const f = fields[name];
-          return (
-            <div key={name}>
-              <div className="relative">
-                <Image className="absolute top-3.5 left-3.5" src={f.icon} alt="" />
-                <input
-                  className="w-full rounded-md border-2 border-black bg-white py-3 pl-12 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                  name={name}
-                  type={f.type}
-                  placeholder={f.placeholder}
-                  autoComplete={!isLogin && name === 'password' ? 'new-password' : f.autoComplete}
-                  required
-                />
-              </div>
-              {state.fieldErrors?.[name]?.map((msg) => (
-                <p key={msg} className="mt-1 text-sm text-red-100">
-                  {msg}
-                </p>
-              ))}
-            </div>
-          );
-        })}
-        {state.error && <p className="text-sm text-red-100">{state.error}</p>}
-        <button
-          disabled={pending}
-          className="w-full rounded-md bg-black px-5 py-3 font-bold text-white disabled:opacity-60"
-        >
-          {isLogin ? 'Login' : 'Sign Up'}
-        </button>
-      </form>
-
-      <p className="text-sm">
-        {isLogin ? "Don't have an account? " : 'Already have an account? '}
-        <Link href={isLogin ? '/register' : '/login'} className="font-bold">
-          {isLogin ? 'Sign up' : 'Login'}
+    <main className="grid min-h-dvh lg:grid-cols-[5fr_6fr]">
+      <aside className="relative hidden flex-col justify-between overflow-hidden bg-brand p-12 text-white lg:flex">
+        <div className="absolute -right-24 -bottom-24 size-96 rounded-full bg-brand-light/30 blur-3xl" />
+        <Link href="/" className="relative text-2xl font-bold tracking-tight">
+          hitorigoto
         </Link>
-      </p>
+        <div className="relative">
+          <p aria-hidden className="jp text-8xl font-bold text-white/20">
+            独り言
+          </p>
+          <blockquote className="mt-6 max-w-sm text-2xl font-semibold leading-snug">
+            Bahasa baru tidak dikuasai dalam semalam, tapi bisa dimulai malam ini.
+          </blockquote>
+          <p className="mt-4 text-sm text-white/70">Hitorigoto berarti bergumam sendiri.</p>
+        </div>
+      </aside>
+
+      <section className="flex flex-col justify-center px-6 py-12 sm:px-12">
+        <div className="mx-auto w-full max-w-sm">
+          <Link href="/" className="mb-10 block text-2xl font-bold tracking-tight lg:hidden">
+            hitorigoto
+          </Link>
+          <h1 className="text-3xl font-bold">{c.title}</h1>
+          <p className="mt-2 text-dark/70">{c.subtitle}</p>
+
+          <form action={action} className="mt-8 flex flex-col gap-5">
+            {names.map((name) => {
+              const f = fields[name];
+              const errors = state.fieldErrors?.[name];
+              return (
+                <div key={name}>
+                  <label htmlFor={name} className="mb-1.5 block text-sm font-medium">
+                    {f.label}
+                  </label>
+                  <div className="relative">
+                    <Image className="absolute top-3.5 left-3.5 opacity-60" src={f.icon} alt="" />
+                    <input
+                      id={name}
+                      name={name}
+                      type={f.type}
+                      autoComplete={!isLogin && name === 'password' ? 'new-password' : f.autoComplete}
+                      required
+                      aria-invalid={!!errors}
+                      className="w-full rounded-xl border border-black/20 bg-white py-3 pl-12 transition focus:border-brand aria-invalid:border-red-500"
+                    />
+                  </div>
+                  {errors?.map((msg) => (
+                    <p key={msg} className="mt-1.5 text-sm text-red-600">
+                      {msg}
+                    </p>
+                  ))}
+                </div>
+              );
+            })}
+            {state.error && (
+              <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+                {state.error}
+              </p>
+            )}
+            <button
+              disabled={pending}
+              className="rounded-xl bg-brand py-3 font-semibold text-white shadow-soft transition hover:bg-brand-dark active:scale-[0.98] disabled:opacity-60"
+            >
+              {pending ? 'Memproses…' : c.submit}
+            </button>
+          </form>
+
+          <p className="mt-8 text-sm text-dark/70">
+            {c.switchText}{' '}
+            <Link href={c.switchHref} className="font-semibold text-brand hover:underline">
+              {c.switchLink}
+            </Link>
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

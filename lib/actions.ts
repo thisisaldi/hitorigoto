@@ -14,15 +14,15 @@ export type FormState = { error?: string; fieldErrors?: Record<string, string[]>
 const registerSchema = z.object({
   username: z
     .string()
-    .min(4, 'Username should be at least 4 characters!')
-    .regex(/^[a-zA-Z0-9]+$/, 'Username should not contains any symbols!'),
-  email: z.email('Invalid email format!'),
+    .min(4, 'Nama pengguna minimal 4 karakter.')
+    .regex(/^[a-zA-Z0-9]+$/, 'Nama pengguna hanya boleh huruf dan angka.'),
+  email: z.email('Format email tidak valid.'),
   password: z
     .string()
-    .min(6, 'Password should be at least 6 characters!')
-    .regex(/[a-z]/, 'Password needs a lowercase letter!')
-    .regex(/[A-Z]/, 'Password needs an uppercase letter!')
-    .regex(/[0-9]/, 'Password needs a number!'),
+    .min(6, 'Kata sandi minimal 6 karakter.')
+    .regex(/[a-z]/, 'Kata sandi perlu huruf kecil.')
+    .regex(/[A-Z]/, 'Kata sandi perlu huruf besar.')
+    .regex(/[0-9]/, 'Kata sandi perlu angka.'),
 });
 
 const profileSchema = z.object({
@@ -32,7 +32,7 @@ const profileSchema = z.object({
   job: z.string().trim().max(100),
   organization: z.string().trim().max(100),
   phoneNumber: z.string().trim().max(30),
-  email: z.email('Invalid email format!'),
+  email: z.email('Format email tidak valid.'),
   about: z.string().trim().max(250),
 });
 
@@ -48,8 +48,8 @@ export async function register(_: FormState, fd: FormData): Promise<FormState> {
 
   const { username, email, password } = parsed.data;
   await connectDB();
-  if (await User.exists({ username })) return { fieldErrors: { username: ['Username already exists!'] } };
-  if (await User.exists({ email })) return { fieldErrors: { email: ['Email already exists!'] } };
+  if (await User.exists({ username })) return { fieldErrors: { username: ['Nama pengguna sudah dipakai.'] } };
+  if (await User.exists({ email })) return { fieldErrors: { email: ['Email sudah terdaftar.'] } };
 
   const user = await User.create({ username, email, password: await bcrypt.hash(password, 10) });
   await createSession(user.id);
@@ -59,13 +59,13 @@ export async function register(_: FormState, fd: FormData): Promise<FormState> {
 export async function login(_: FormState, fd: FormData): Promise<FormState> {
   const username = str(fd, 'username');
   const password = str(fd, 'password');
-  if (!username || !password) return { error: 'Please fill in the username and password!' };
+  if (!username || !password) return { error: 'Isi nama pengguna dan kata sandi.' };
 
   await connectDB();
   const user = await User.findOne({ username });
   // same message for unknown user and wrong password
   if (!user || !(await bcrypt.compare(password, user.password))) {
-    return { error: 'Incorrect username or password!' };
+    return { error: 'Nama pengguna atau kata sandi salah.' };
   }
 
   await createSession(user.id);
@@ -95,7 +95,7 @@ export async function updateProfile(_: FormState, fd: FormData): Promise<FormSta
 
   await connectDB();
   if (d.email !== me.email && (await User.exists({ email: d.email }))) {
-    return { fieldErrors: { email: ['Email already exists!'] } };
+    return { fieldErrors: { email: ['Email sudah terdaftar.'] } };
   }
 
   const update: Record<string, unknown> = {
@@ -114,10 +114,10 @@ export async function updateProfile(_: FormState, fd: FormData): Promise<FormSta
   const file = fd.get('profileimg');
   if (file instanceof File && file.size > 0) {
     if (!AVATAR_TYPES.includes(file.type)) {
-      return { fieldErrors: { profileimg: ['Only PNG or JPEG images are allowed.'] } };
+      return { fieldErrors: { profileimg: ['Hanya gambar PNG atau JPEG.'] } };
     }
     if (file.size > AVATAR_MAX_BYTES) {
-      return { fieldErrors: { profileimg: ['Image must be 2MB or smaller.'] } };
+      return { fieldErrors: { profileimg: ['Ukuran gambar maksimal 2 MB.'] } };
     }
     const saved = await saveAvatar(file);
     update.profile_img = { id: saved.id, filename: saved.filename };
