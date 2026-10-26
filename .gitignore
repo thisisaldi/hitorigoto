@@ -1,1 +1,19 @@
-node_modules
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+
+# env (commit .env.example only)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# misc
+*.log
+*.tsbuildinfo
+.DS_Store

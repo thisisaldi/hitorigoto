@@ -189,3 +189,16 @@ Don't forget to give the project a star! Thanks again!
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+
+## Development & deployment (Next.js)
+
+The app is a single Next.js 16 project (App Router, Cache Components) backed by MongoDB.
+
+```bash
+cp .env.example .env.local   # fill MONGODB_URI and SESSION_SECRET
+npm install
+npm run dev                  # http://localhost:3000
+```
+
+Deploy to Vercel: import the repo, set `MONGODB_URI` and `SESSION_SECRET` in Project Settings, and
+allow Vercel's IPs in MongoDB Atlas network access (or use `0.0.0.0/0`).

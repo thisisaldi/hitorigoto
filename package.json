@@ -1,23 +1,31 @@
 {
-  "name": "jlpt-1",
-  "version": "1.0.0",
-  "description": "<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 --> <a name=\"readme-top\"></a> <!-- *** Thanks for checking out the Best-README-Template. If you have a suggestion *** that would make this better, please fork the repo and create a pull request *** or simply open an issue with the tag \"enhancement\". *** Don't forget to give the project a star! *** Thanks again! Now go create something AMAZING! :D -->",
-  "main": "index.js",
+  "name": "hitorigoto",
+  "version": "0.7.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd server && npm run dev\" \"cd client && npm start\""
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thisisaldi/jlpt-1.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/thisisaldi/jlpt-1/issues"
-  },
-  "homepage": "https://github.com/thisisaldi/jlpt-1#readme",
   "dependencies": {
-    "concurrently": "^8.2.0"
+    "bcryptjs": "^3.0.3",
+    "jose": "^6.2.13",
+    "mongoose": "^9.11.4",
+    "next": "^16.4.3",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4.3.3",
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.3",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
   }
 }

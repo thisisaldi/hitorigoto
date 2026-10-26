@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-poppins: var(--font-poppins);
+  --color-brand: #645cbb;
+  --color-brand-light: #a59cff;
+  --color-cream: #f7efe5;
+  --color-dark: #1d1d1d;
+}
+
+body {
+  font-family: var(--font-poppins), sans-serif;
+  color: var(--color-dark);
+}
+
+/* hover dropdowns used by the navbar */
+.dropdown { position: relative; display: inline-block; }
+.dropdown-content { display: none; position: absolute; z-index: 1; background: white; }
+.dropdown-content a { display: block; text-decoration: none; }
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content { display: block; }
+.dropdown:hover .down-hover { transform: rotate(180deg); }
