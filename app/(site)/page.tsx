@@ -7,35 +7,35 @@ export default function Home() {
   return (
     <>
       <section
-        className="flex h-screen items-center bg-cover bg-fixed bg-center px-[200px] py-[100px] max-lg:px-8"
+        className="flex min-h-screen items-center bg-cover bg-center px-6 pt-28 pb-16 lg:bg-fixed lg:px-[200px]"
         style={{ backgroundImage: `url(${heroBg.src})` }}
       >
-        <div className="ml-auto flex w-[576px] flex-col gap-2 text-white">
-          <h1 className="text-4xl font-bold">
+        <div className="flex w-full flex-col lg:ml-auto lg:w-[576px] gap-2 text-white">
+          <h1 className="text-3xl font-bold md:text-4xl">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, minima.
           </h1>
           <p className="my-3 w-[90%] break-words">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam, veritatis! lorem
           </p>
-          <div className="flex gap-2.5">
-            <ButtonLink href="/register" className="text-2xl">
+          <div className="flex flex-wrap gap-2.5">
+            <ButtonLink href="/register" className="text-lg md:text-2xl">
               Register Now
             </ButtonLink>
-            <ButtonLink href="/aboutus" variant="outline" className="text-2xl">
+            <ButtonLink href="/aboutus" variant="outline" className="text-lg md:text-2xl">
               Contact Us
             </ButtonLink>
           </div>
         </div>
       </section>
-      <section className="flex items-center gap-[150px] px-[150px] py-[100px] max-lg:flex-col max-lg:px-8">
+      <section className="flex flex-col items-center gap-10 px-6 py-16 lg:flex-row lg:gap-[150px] lg:px-[150px] lg:py-[100px]">
         <Image
           src={illust}
           alt="Web Course"
-          className="w-[500px] pointer-events-none select-none"
+          className="pointer-events-none h-auto w-full max-w-[500px] select-none"
           draggable={false}
         />
-        <div className="flex w-[576px] flex-col gap-2 text-right max-lg:w-full">
-          <h2 className="text-4xl font-bold">
+        <div className="flex w-full flex-col gap-2 lg:w-[576px] lg:text-right">
+          <h2 className="text-3xl font-bold md:text-4xl">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, minima.
           </h2>
           <p className="break-words">

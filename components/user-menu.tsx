@@ -12,9 +12,9 @@ export async function UserMenu() {
     <div className="dropdown py-3">
       <div className="flex items-center gap-5 rounded-lg border-2 border-indigo-500/50 p-2">
         <Avatar avatarId={user.avatarId} size={30} className="rounded-full" />
-        <span>{user.username}</span>
+        <span className="hidden sm:inline">{user.username}</span>
       </div>
-      <div className="dropdown-content w-36 rounded-md border-2 border-black px-4 py-2">
+      <div className="dropdown-content right-0 w-36 rounded-md border-2 border-black px-4 py-2">
         <Link href="/profile" className="py-2 hover:text-brand">
           My Profile
         </Link>
@@ -35,7 +35,9 @@ export function GuestButtons() {
       <ButtonLink href="/login" variant="outline">
         Login
       </ButtonLink>
-      <ButtonLink href="/register">Signup</ButtonLink>
+      <ButtonLink href="/register" className="max-sm:hidden">
+        Signup
+      </ButtonLink>
     </div>
   );
 }

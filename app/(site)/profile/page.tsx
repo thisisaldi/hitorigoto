@@ -12,7 +12,7 @@ export default function ProfilePage() {
       <Suspense fallback={<div className="h-[500px] bg-cream" />}>
         <ProfileHero />
       </Suspense>
-      <section className="p-[72px]">
+      <section className="p-6 lg:p-[72px]">
         <h2 className="text-2xl font-bold">Latest Activity</h2>
         <p className="mt-6 text-center text-gray-500">Belum ada aktivitas.</p>
       </section>
@@ -25,16 +25,16 @@ async function ProfileHero() {
   const subtitle = [user.job, user.organization].filter(Boolean).join(' at ');
 
   return (
-    <div className="flex items-start gap-10 bg-cream px-[150px] pt-[120px] pb-20 max-lg:flex-col max-lg:px-8">
+    <div className="flex flex-col items-start gap-10 bg-cream px-6 pt-28 pb-16 lg:flex-row lg:px-[150px] lg:pt-[120px] lg:pb-20">
       <Avatar
         avatarId={user.avatarId}
         size={300}
-        className="rounded-full border-2 border-[#252525]"
+        className="max-w-full rounded-full border-2 border-[#252525]"
       />
-      <div className="flex h-[300px] flex-col justify-between">
+      <div className="flex min-h-[300px] flex-col justify-between gap-6">
         <div className="flex flex-col gap-4 text-xs">
           <div>
-            <h1 className="text-5xl font-bold">{user.fullName || user.username}</h1>
+            <h1 className="text-4xl font-bold md:text-5xl">{user.fullName || user.username}</h1>
             {subtitle && <h4>{subtitle}</h4>}
             {user.joinedYear && <span className="text-gray-400">Joined Since {user.joinedYear}</span>}
           </div>

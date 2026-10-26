@@ -6,7 +6,7 @@ import type { CurrentUser } from '@/lib/auth';
 import { Avatar } from './avatar';
 import { Button } from './button';
 
-const input = 'h-10 w-[700px] max-w-full rounded border-2 border-black px-2';
+const input = 'h-10 w-full rounded border-2 border-black px-2 focus-visible:outline-2 focus-visible:outline-brand';
 
 function Row({ label, name, errors, children }: {
   label: string;
@@ -15,11 +15,11 @@ function Row({ label, name, errors, children }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex gap-4">
-      <label htmlFor={name} className="mt-2 w-[120px] shrink-0">
+    <div className="flex flex-col gap-1 md:flex-row md:gap-4">
+      <label htmlFor={name} className="w-[120px] shrink-0 md:mt-2">
         {label}
       </label>
-      <div>
+      <div className="w-full">
         {children}
         {errors?.map((e) => (
           <p key={e} className="mt-1 text-sm text-red-600">
@@ -41,14 +41,14 @@ export function ProfileForm({ user }: { user: CurrentUser }) {
   return (
     <>
       <form action={action} className="flex flex-col gap-8">
-        <div className="flex items-start gap-10">
+        <div className="flex flex-col items-start gap-6 sm:flex-row sm:gap-10">
           {preview ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={preview} alt="" className="h-[200px] w-[200px] rounded border-2 border-black object-cover" />
           ) : (
             <Avatar avatarId={user.avatarId} size={200} className="rounded border-2 border-black" />
           )}
-          <div className="mt-14">
+          <div className="sm:mt-14">
             <label htmlFor="profileimg" className="cursor-pointer rounded-lg bg-brand px-4 py-1.5 text-white hover:bg-brand-light">
               Select Image
             </label>

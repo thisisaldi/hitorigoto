@@ -23,8 +23,8 @@ const steps = [
 export default function About() {
   return (
     <main>
-      <section className="flex h-[700px] justify-between px-[250px] max-lg:h-auto max-lg:flex-col max-lg:px-8 max-lg:pt-28">
-        <div className="flex w-[550px] flex-col py-[300px] max-lg:w-full max-lg:py-8">
+      <section className="flex flex-col justify-between gap-8 px-6 pt-28 pb-12 lg:min-h-[700px] lg:flex-row lg:px-[250px] lg:pt-0 lg:pb-0">
+        <div className="flex w-full flex-col lg:w-[550px] lg:justify-center">
           <h1 className="mb-4 text-4xl font-bold tracking-wide">Apa itu JLPT</h1>
           <p>
             JLPT adalah singkatan dari Japanese Language Proficiency Test atau dalam bahasa
@@ -32,18 +32,18 @@ export default function About() {
             Jepang yang ditujukan untuk orang-orang yang memiliki bahasa ibu bukan bahasa Jepang.
           </p>
         </div>
-        <Image className="w-[300px] self-center" src={intro} alt="" />
+        <Image className="w-full max-w-[300px] self-center" src={intro} alt="" />
       </section>
 
-      <section className="flex h-[400px] flex-col items-center justify-center bg-brand text-white">
+      <section className="flex flex-col items-center justify-center bg-brand px-6 py-20 text-center text-white">
         <h2 className="mb-10 text-3xl font-bold tracking-wide">Tujuan</h2>
         <p>JLPT diadakan di seluruh dunia untuk mengevaluasi dan</p>
         <p>mengesahkan kemahiran berbahasa Jepang dari penutur asing.</p>
       </section>
 
-      <section className="flex justify-between px-[250px] py-12 max-lg:flex-col max-lg:px-8">
-        <Image className="w-[300px]" src={history} alt="" />
-        <div className="flex w-[550px] flex-col py-8 max-lg:w-full">
+      <section className="flex flex-col justify-between gap-8 px-6 py-12 lg:flex-row lg:px-[250px]">
+        <Image className="w-full max-w-[300px]" src={history} alt="" />
+        <div className="flex w-full flex-col lg:w-[550px]">
           <h2 className="mb-4 text-3xl font-bold tracking-wide">Sejarah JLPT</h2>
           <p>
             JLPT pertama kali diselenggarakan pada tahun 1984 sebagai tanggapan atas meningkatnya
@@ -57,12 +57,12 @@ export default function About() {
         </div>
       </section>
 
-      <section className="mx-[250px] mt-28 mb-[120px] flex flex-col items-center gap-5 rounded-xl bg-cream px-[120px] py-16 shadow-lg max-lg:mx-4 max-lg:px-6">
+      <section className="mx-4 mt-16 mb-24 flex flex-col items-center gap-5 rounded-xl bg-cream px-6 py-16 shadow-lg lg:mx-[250px] lg:mt-28 lg:px-[120px]">
         <h2 className="text-3xl font-bold tracking-wide">Level JLPT</h2>
         {jlptLevels.map((l) => (
           <div key={l.level} className="w-11/12 border-b border-gray-300 pb-8 last:border-0">
-            <div className="mt-4 flex gap-24">
-              <h3 className="mt-4 h-fit w-[125px] rounded-lg bg-brand px-10 py-8 text-4xl font-bold tracking-wide text-white">
+            <div className="mt-4 flex flex-col gap-6 md:flex-row md:gap-24">
+              <h3 className="mt-4 h-fit w-[125px] shrink-0 rounded-lg bg-brand px-10 py-8 text-4xl font-bold tracking-wide text-white">
                 {l.level}
               </h3>
               <div className="flex flex-col">
@@ -76,12 +76,12 @@ export default function About() {
         ))}
       </section>
 
-      <section className="flex flex-col items-center bg-cream py-10">
+      <section className="flex flex-col items-center bg-cream px-4 py-10">
         <h2 className="text-3xl font-bold tracking-wide">Tahap Pelaksanaan JLPT</h2>
         {steps.map((lines) => (
           <div
             key={lines[0]}
-            className="mt-8 w-4/12 rounded-lg bg-brand px-10 py-8 text-center tracking-wide text-white max-lg:w-10/12"
+            className="mt-8 w-10/12 rounded-lg bg-brand px-10 py-8 text-center tracking-wide text-white lg:w-4/12"
           >
             {lines.map((line) => (
               <p key={line}>{line}</p>

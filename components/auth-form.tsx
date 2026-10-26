@@ -20,13 +20,13 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
   const names = isLogin ? (['username', 'password'] as const) : (['username', 'email', 'password'] as const);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-brand text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-brand px-4 text-white">
       <Link href="/" className="m-10 text-3xl font-bold tracking-wide">
         hitorigoto
       </Link>
       <h1 className="text-lg font-bold">{isLogin ? 'Login to your account.' : 'Create a new account.'}</h1>
 
-      <form action={action} className="flex flex-col gap-4 py-6 text-dark">
+      <form action={action} className="flex w-full max-w-[350px] flex-col gap-4 py-6 text-dark">
         {names.map((name) => {
           const f = fields[name];
           return (
@@ -34,7 +34,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
               <div className="relative">
                 <Image className="absolute top-3.5 left-3.5" src={f.icon} alt="" />
                 <input
-                  className="w-[350px] rounded-md border-2 border-black bg-white py-3 pl-12 focus:outline-none"
+                  className="w-full rounded-md border-2 border-black bg-white py-3 pl-12 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   name={name}
                   type={f.type}
                   placeholder={f.placeholder}
@@ -43,17 +43,17 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                 />
               </div>
               {state.fieldErrors?.[name]?.map((msg) => (
-                <p key={msg} className="mt-1 max-w-[350px] text-sm text-red-200">
+                <p key={msg} className="mt-1 text-sm text-red-100">
                   {msg}
                 </p>
               ))}
             </div>
           );
         })}
-        {state.error && <p className="max-w-[350px] text-sm text-red-200">{state.error}</p>}
+        {state.error && <p className="text-sm text-red-100">{state.error}</p>}
         <button
           disabled={pending}
-          className="w-[350px] rounded-md bg-black px-5 py-3 font-bold text-white disabled:opacity-60"
+          className="w-full rounded-md bg-black px-5 py-3 font-bold text-white disabled:opacity-60"
         >
           {isLogin ? 'Login' : 'Sign Up'}
         </button>

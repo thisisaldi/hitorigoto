@@ -25,8 +25,8 @@ export default async function CoursePage({ params }: PageProps<'/course/[level]'
   if (!level) notFound();
 
   return (
-    <main className="flex px-[200px] py-[150px] max-lg:flex-col max-lg:px-8 max-lg:pt-28">
-      <div className="flex w-7/12 flex-col max-lg:w-full">
+    <main className="flex flex-col px-6 pt-28 pb-16 lg:flex-row lg:px-[200px] lg:py-[150px]">
+      <div className="flex w-full flex-col lg:w-7/12">
         <Image src={level.banner ?? level.image} alt="" />
         <h1 className="mt-4 mb-4 text-4xl font-bold">{level.title}</h1>
         <p className="mb-4">{level.description ?? level.summary}</p>
@@ -49,9 +49,9 @@ export default async function CoursePage({ params }: PageProps<'/course/[level]'
         )}
       </div>
 
-      <aside className="ml-10 h-fit w-[400px] rounded-lg border-2 border-black text-center tracking-wide max-lg:mx-0 max-lg:mt-8 max-lg:w-full">
+      <aside className="mt-8 h-fit w-full rounded-lg border-2 border-black text-center tracking-wide lg:mt-0 lg:ml-10 lg:w-[400px] lg:shrink-0">
         <h2 className="bg-brand py-8 text-3xl font-bold text-white">Course Benefit</h2>
-        <ul className="list-inside list-disc px-12 py-6 text-start">
+        <ul className="list-inside list-disc px-6 py-6 text-start md:px-12">
           {benefits.map((b) => (
             <li key={b}>{b}</li>
           ))}
