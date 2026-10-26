@@ -1,6 +1,7 @@
 'use server';
 
 import bcrypt from 'bcryptjs';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { AVATAR_MAX_BYTES, AVATAR_TYPES, deleteAvatar, saveAvatar } from './avatar';
@@ -9,7 +10,12 @@ import { connectDB } from './db';
 import { User } from './models/user';
 import { createSession, deleteSession } from './session';
 
-export type FormState = { error?: string; fieldErrors?: Record<string, string[]> };
+export type FormState = {
+  error?: string;
+  fieldErrors?: Record<string, string[]>;
+  /** Submitted values (never the password) so React 19's form reset doesn't wipe them. */
+  values?: Record<string, string>;
+};
 
 const registerSchema = z.object({
   username: z
@@ -37,6 +43,7 @@ const profileSchema = z.object({
 });
 
 const str = (fd: FormData, key: string) => String(fd.get(key) ?? '');
+const keep = (fd: FormData, keys: string[]) => Object.fromEntries(keys.map((k) => [k, str(fd, k)]));
 
 export async function register(_: FormState, fd: FormData): Promise<FormState> {
   const parsed = registerSchema.safeParse({
@@ -44,12 +51,13 @@ export async function register(_: FormState, fd: FormData): Promise<FormState> {
     email: str(fd, 'email'),
     password: str(fd, 'password'),
   });
-  if (!parsed.success) return { fieldErrors: z.flattenError(parsed.error).fieldErrors };
+  const values = keep(fd, ['username', 'email']);
+  if (!parsed.success) return { fieldErrors: z.flattenError(parsed.error).fieldErrors, values };
 
   const { username, email, password } = parsed.data;
   await connectDB();
-  if (await User.exists({ username })) return { fieldErrors: { username: ['Nama pengguna sudah dipakai.'] } };
-  if (await User.exists({ email })) return { fieldErrors: { email: ['Email sudah terdaftar.'] } };
+  if (await User.exists({ username })) return { fieldErrors: { username: ['Nama pengguna sudah dipakai.'] }, values };
+  if (await User.exists({ email })) return { fieldErrors: { email: ['Email sudah terdaftar.'] }, values };
 
   const user = await User.create({ username, email, password: await bcrypt.hash(password, 10) });
   await createSession(user.id);
@@ -59,13 +67,14 @@ export async function register(_: FormState, fd: FormData): Promise<FormState> {
 export async function login(_: FormState, fd: FormData): Promise<FormState> {
   const username = str(fd, 'username');
   const password = str(fd, 'password');
-  if (!username || !password) return { error: 'Isi nama pengguna dan kata sandi.' };
+  const values = { username };
+  if (!username || !password) return { error: 'Isi nama pengguna dan kata sandi.', values };
 
   await connectDB();
   const user = await User.findOne({ username });
   // same message for unknown user and wrong password
   if (!user || !(await bcrypt.compare(password, user.password))) {
-    return { error: 'Nama pengguna atau kata sandi salah.' };
+    return { error: 'Nama pengguna atau kata sandi salah.', values };
   }
 
   await createSession(user.id);
@@ -90,12 +99,13 @@ export async function updateProfile(_: FormState, fd: FormData): Promise<FormSta
     email: str(fd, 'email'),
     about: str(fd, 'about'),
   });
-  if (!parsed.success) return { fieldErrors: z.flattenError(parsed.error).fieldErrors };
+  const values = keep(fd, ['fullName', 'gender', 'birthDate', 'job', 'organization', 'phoneNumber', 'email', 'about']);
+  if (!parsed.success) return { fieldErrors: z.flattenError(parsed.error).fieldErrors, values };
   const d = parsed.data;
 
   await connectDB();
   if (d.email !== me.email && (await User.exists({ email: d.email }))) {
-    return { fieldErrors: { email: ['Email sudah terdaftar.'] } };
+    return { fieldErrors: { email: ['Email sudah terdaftar.'] }, values };
   }
 
   const update: Record<string, unknown> = {
@@ -114,10 +124,10 @@ export async function updateProfile(_: FormState, fd: FormData): Promise<FormSta
   const file = fd.get('profileimg');
   if (file instanceof File && file.size > 0) {
     if (!AVATAR_TYPES.includes(file.type)) {
-      return { fieldErrors: { profileimg: ['Hanya gambar PNG atau JPEG.'] } };
+      return { fieldErrors: { profileimg: ['Hanya gambar PNG atau JPEG.'] }, values };
     }
     if (file.size > AVATAR_MAX_BYTES) {
-      return { fieldErrors: { profileimg: ['Ukuran gambar maksimal 2 MB.'] } };
+      return { fieldErrors: { profileimg: ['Ukuran gambar maksimal 2 MB.'] }, values };
     }
     const saved = await saveAvatar(file);
     update.profile_img = { id: saved.id, filename: saved.filename };
@@ -125,6 +135,8 @@ export async function updateProfile(_: FormState, fd: FormData): Promise<FormSta
   }
 
   await User.findByIdAndUpdate(me.id, update);
+  // the navbar lives in a persistent layout; refresh it so the new avatar shows
+  revalidatePath('/', 'layout');
   redirect('/profile');
 }
 

@@ -35,6 +35,7 @@ export function ProfileForm({ user }: { user: CurrentUser }) {
   const [state, action, pending] = useActionState<FormState, FormData>(updateProfile, {});
   const [preview, setPreview] = useState<string>();
   const err = (name: string) => state.fieldErrors?.[name];
+  const val = (name: keyof CurrentUser) => state.values?.[name] ?? String(user[name] ?? '');
 
   useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
 
@@ -72,32 +73,32 @@ export function ProfileForm({ user }: { user: CurrentUser }) {
         </div>
 
         <Row label="Nama lengkap" name="fullName" errors={err('fullName')}>
-          <input id="fullName" name="fullName" defaultValue={user.fullName} className={input} />
+          <input id="fullName" name="fullName" defaultValue={val('fullName')} className={input} />
         </Row>
         <Row label="Gender" name="gender" errors={err('gender')}>
-          <select id="gender" name="gender" defaultValue={user.gender} className={input}>
+          <select id="gender" name="gender" defaultValue={val('gender')} className={input}>
             <option value="">-</option>
             <option value="cowo">Laki - Laki</option>
             <option value="cewe">Perempuan</option>
           </select>
         </Row>
         <Row label="Tanggal Lahir" name="birthDate" errors={err('birthDate')}>
-          <input id="birthDate" name="birthDate" type="date" defaultValue={user.birthDate} className={input} />
+          <input id="birthDate" name="birthDate" type="date" defaultValue={val('birthDate')} className={input} />
         </Row>
         <Row label="Pekerjaan" name="job" errors={err('job')}>
-          <input id="job" name="job" defaultValue={user.job} className={input} />
+          <input id="job" name="job" defaultValue={val('job')} className={input} />
         </Row>
         <Row label="Instansi" name="organization" errors={err('organization')}>
-          <input id="organization" name="organization" defaultValue={user.organization} className={input} />
+          <input id="organization" name="organization" defaultValue={val('organization')} className={input} />
         </Row>
         <Row label="No. Telp" name="phoneNumber" errors={err('phoneNumber')}>
-          <input id="phoneNumber" name="phoneNumber" type="tel" defaultValue={user.phoneNumber} className={input} />
+          <input id="phoneNumber" name="phoneNumber" type="tel" defaultValue={val('phoneNumber')} className={input} />
         </Row>
         <Row label="Email" name="email" errors={err('email')}>
-          <input id="email" name="email" type="email" required defaultValue={user.email} className={input} />
+          <input id="email" name="email" type="email" required defaultValue={val('email')} className={input} />
         </Row>
         <Row label="Tentang saya" name="about" errors={err('about')}>
-          <textarea id="about" name="about" maxLength={250} defaultValue={user.about} className={`${input} h-[100px] resize-none py-1`} />
+          <textarea id="about" name="about" maxLength={250} defaultValue={val('about')} className={`${input} h-[100px] resize-none py-1`} />
         </Row>
 
         <div>

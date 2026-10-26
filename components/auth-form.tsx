@@ -80,6 +80,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                       id={name}
                       name={name}
                       type={f.type}
+                      defaultValue={name === 'password' ? undefined : state.values?.[name]}
                       autoComplete={!isLogin && name === 'password' ? 'new-password' : f.autoComplete}
                       required
                       aria-invalid={!!errors}
