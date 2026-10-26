@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import back from '@/assets/img/back.svg';
 import { Container } from '@/components/container';
+import { getKanjiInfo } from '@/lib/kanji-api';
 import { getN3Lesson, n3Lessons } from '@/lib/lessons';
 
 export function generateStaticParams() {
@@ -21,6 +22,7 @@ export default async function Lesson({ params }: PageProps<'/course/[level]/[id]
   const lesson = level === 'n3' ? getN3Lesson(Number(id)) : undefined;
   if (!lesson) notFound();
 
+  const info = await Promise.all(lesson.kanji.map((k) => getKanjiInfo(k.char)));
   const prev = getN3Lesson(lesson.id - 1);
   const next = getN3Lesson(lesson.id + 1);
 
@@ -53,37 +55,82 @@ export default async function Lesson({ params }: PageProps<'/course/[level]/[id]
             </section>
 
             <div className="mt-12 space-y-6">
-              {lesson.kanji.map((k) => (
-                <section
-                  key={k.char}
-                  className="grid gap-6 rounded-2xl border border-black/10 p-6 transition hover:border-brand/40 hover:shadow-soft md:grid-cols-[10rem_1fr] md:p-8"
-                >
-                  <div>
-                    <p className="jp text-8xl leading-none font-bold text-brand">{k.char}</p>
-                    <p className="mt-4 text-sm text-dark/60">{k.meaning}</p>
-                    <p className="jp mt-2 text-sm">
-                      <span className="text-dark/50">On </span>
-                      {k.on}
-                    </p>
-                    {k.kun && (
-                      <p className="jp text-sm">
-                        <span className="text-dark/50">Kun </span>
-                        {k.kun}
-                      </p>
-                    )}
-                  </div>
-                  <ul className="grid gap-3 sm:grid-cols-3 md:grid-cols-1 lg:grid-cols-3">
-                    {k.examples.map((e) => (
-                      <li key={e.word} className="rounded-xl bg-cream/70 p-4">
-                        <p className="jp text-xs text-dark/60">{e.reading}</p>
-                        <p className="jp text-2xl font-bold">{e.word}</p>
-                        <p className="mt-1 text-sm">{e.meaning}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
+              {lesson.kanji.map((k, i) => {
+                const api = info[i];
+                const curated = new Set(k.examples.map((e) => e.word));
+                const more = api?.words.filter((w) => !curated.has(w.word)).slice(0, 4) ?? [];
+                return (
+                  <section
+                    key={k.char}
+                    className="grid gap-6 rounded-2xl border border-black/10 p-6 transition hover:border-brand/40 hover:shadow-soft md:grid-cols-[10rem_1fr] md:p-8"
+                  >
+                    <div>
+                      <p className="jp text-8xl leading-none font-bold text-brand">{k.char}</p>
+                      <p className="mt-4 font-medium">{k.meaning}</p>
+                      {api && (
+                        <dl className="jp mt-3 space-y-1 text-sm">
+                          {api.on.length > 0 && (
+                            <div>
+                              <dt className="inline text-dark/50">On </dt>
+                              <dd className="inline">{api.on.join('、')}</dd>
+                            </div>
+                          )}
+                          {api.kun.length > 0 && (
+                            <div>
+                              <dt className="inline text-dark/50">Kun </dt>
+                              <dd className="inline">{api.kun.join('、')}</dd>
+                            </div>
+                          )}
+                          <div className="font-sans text-xs text-dark/50">
+                            {api.strokes} goresan
+                            {api.frequencyRank && ` · peringkat ${api.frequencyRank} di koran`}
+                          </div>
+                        </dl>
+                      )}
+                    </div>
+                    <div>
+                      <ul className="grid gap-3 sm:grid-cols-3 md:grid-cols-1 lg:grid-cols-3">
+                        {k.examples.map((e) => (
+                          <li key={e.word} className="rounded-xl bg-cream/70 p-4">
+                            <p className="jp text-xs text-dark/60">{e.reading}</p>
+                            <p className="jp text-2xl font-bold">{e.word}</p>
+                            <p className="mt-1 text-sm">{e.meaning}</p>
+                          </li>
+                        ))}
+                      </ul>
+                      {more.length > 0 && (
+                        <div className="mt-5">
+                          <h3 className="text-xs font-semibold tracking-wide text-dark/50 uppercase">
+                            Kata umum lainnya
+                          </h3>
+                          <ul className="mt-3 grid gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
+                            {more.map((w) => (
+                              <li key={w.word}>
+                                <p className="whitespace-nowrap">
+                                  <span className="jp font-bold">{w.word}</span>{' '}
+                                  <span className="jp text-xs text-dark/50">{w.reading}</span>
+                                </p>
+                                <p lang="en" className="line-clamp-2 text-xs text-dark/70">
+                                  {w.gloss}
+                                </p>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </section>
+                );
+              })}
             </div>
+
+            <p className="mt-8 text-xs text-dark/50">
+              Bacaan dan kata umum bersumber dari{' '}
+              <a href="https://kanjiapi.dev" className="underline hover:text-brand">
+                kanjiapi.dev
+              </a>{' '}
+              (KANJIDIC dan JMdict, EDRDG). Arti kata umum dalam bahasa Inggris.
+            </p>
 
             <nav aria-label="Pelajaran" className="mt-12 flex justify-between gap-4">
               {prev ? (
